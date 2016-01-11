@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}title{% endblock %}
+{% block content %}
+
+<div class="">
+	<div class="row">
+		<div class="col-md-9">
+			<div class="row row-header">
+				<div class="col-md-9">Temas recientes</div>
+				<div class="col-md-1 text-center">Resp.</div>
+				<div class="col-md-2 text-center">Último mensaje</div>
+			</div>
+			{% for topic in topics %}
+				<div class="row topic-row">
+					<div class="col-md-9">
+						<h3><a href="{{ topic.url }}">{{ topic.title }}</a></h3>
+						<p>por <a href="">{{ topic.user.username }}</a> el {{ topic.created|date:"M d, Y" }} en <a href="{{ topic.forum.url }}">{{ topic.forum.name }}</a></p>
+					</div>
+					<div class="col-md-1 text-center">{{ topic.replies }}</div>
+					<div class="col-md-2 text-center"><small>{{ topic.last_post.created|date:"M d, Y" }}<br/><a href="">{{ topic.last_post.user.username }}</a></small></div>
+				</div>
+			{% endfor %}
+		</div>
+		<div class="col-md-3">
+			{% for forum in forums %}
+				<p><a href="{{ forum.url }}">{{ forum.name }}</a></p>
+			{% endfor %}
+		</div>
+	</div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,38 @@
+body {
+    padding-top: 70px;
+    background: #E4DED8;
+}
+
+h1, h2, h3 {
+    margin-top: 0;
+}
+
+a {
+    color:#3e53a2;
+}
+
+.row-header {
+    background:#A8CAE8;
+}
+
+.topic-row {
+    background:#f8f8f8;
+}
+
+.breadcrumb {
+    background:#F3fAFF;
+    border: 2px solid #B0C0FB;
+}
+
+.posts {
+    background:#FFF;
+    border:4px solid #A8CAE8;
+    border-radius:4px;
+    margin-bottom:20px;
+}
+.post {
+    margin-bottom:20px;
+}
+.post-body {
+    border:2px solid #CCC;
+}
