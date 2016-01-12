@@ -10,7 +10,7 @@
 </head>
 <body>
 
-<nav class="navbar navbar-inverse navbar-fixed-top">
+<nav class="navbar navbar-default navbar-fixed-top">
 	<div class="container">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -19,39 +19,32 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a href="/" class="navbar-brand">Forum</a>
+			<a href="/" class="navbar-brand">Tangana</a>
 		</div>
 		
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
-				<li><a href="/top">Top</a></li>
-				<li><a href="/browse">Browse</a></li>
+				<li><a href="/topic/1">Normas</a></li>
+				<li><a href="/top">Tops</a></li>
 				<li><a href="/search">Search</a></li>
-				{% if user.is_authenticated %}
-					<li><a href="/{{ request.user.username }}/watchlist">Watchlist</a></li>
-					<li><a href="/{{ request.user.username }}/history">History</a></li>
-				{% endif %}
+				<li><a href="/users">Miembros</a></li>
 			</ul>
 			
 			<ul class="nav navbar-nav navbar-right">
 				{% if user.is_authenticated %}
 					<li><a href="/{{ request.user.username }}">{{ request.user.username }}</a></li>
 					<li><a href="/logout">Logout</a></li>
-				{% else %}
 					<li><a href="/#soon">Register</a></li>
 					<li><a href="/login">Login</a></li>
+				{% else %}
 				{% endif %}
 			</ul>
 		</div><!-- /.navbar-collapse -->
 	</div>
 </nav>
 
-<div class="container">
-	<div class="row">
-		<div class="col-md-12">{% block content %}{% endblock %}</div>
-	</div>
-</div>
+{% block content %}{% endblock %}
 
 <script src="/static/js/jquery-1.11.3.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>

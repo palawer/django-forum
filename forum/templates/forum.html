@@ -1,28 +1,51 @@
 {% extends "base.html" %}
-{% block title %}title{% endblock %}
+{% load extras %}
+{% block title %}{{ forum.name }}{% endblock %}
 {% block content %}
 
-<h2>{{ forum.name }}</h2>
-
-<ol class="breadcrumb">
-	<li><a href="/">Home</a></li>
-	<li class="active">{{ forum.name }}</li>
-</ol>
-
-{% for topic in topics %}
+<div class="container">
 	<div class="row">
-		<div class="col-md-9">
-			<h3><a href="{{ topic.url }}">{{ topic.title }}</a></h3>
-			<p>por <a href="">{{ topic.user.username }}</a> el {{ topic.created|date:"M d, Y" }} en <a href="{{ topic.forum.url }}">{{ topic.forum.name }}</a></p>
-		</div>
-		<div class="col-md-1 text-center">{{ topic.replies }}</div>
-		<div class="col-md-2 text-center"><small>{{ topic.last_post.created|date:"M d, Y" }}<br/><a href="">{{ topic.last_post.user.username }}</a></small></div>
-	</div>
-{% endfor %}
+		<div class="col-md-12">
+			
+			<h2>{{ forum.name }}</h2>
 
-<ol class="breadcrumb">
-	<li><a href="/">Home</a></li>
-	<li class="active">{{ forum.name }}</li>
-</ol>
+			<ol class="breadcrumb">
+				<li><a href="/">Home</a></li>
+				<li class="active">{{ forum.name }}</li>
+			</ol>
+			
+			<div class="topics">
+			{% for topic in topics %}
+				<div class="row topic-row">
+					<div class="col-md-9">
+						<h3><a href="{{ topic.url }}">{{ topic.title }}</a></h3>
+						<p>por <a href="">{{ topic.user.username }}</a> el {{ topic.created|date:"M d, Y" }} en <a href="{{ topic.forum.url }}">{{ topic.forum.name }}</a></p>
+					</div>
+					<div class="col-md-1 text-center">{{ topic.replies }}</div>
+					<div class="col-md-2 text-center"><small>{{ topic.last_post.created|date:"M d, Y" }}<br/><a href="">{{ topic.last_post.user.username }}</a></small></div>
+				</div>
+			{% endfor %}
+			</div>
+			
+			<nav>
+				<ul class="pager">
+					{% if topics.has_previous %}
+						<li class="previous"><a href="?{% url_replace request 'page' topics.previous_page_number %}"><span aria-hidden="true">&larr;</span> previous</a></li>
+					{% endif %}
+					<span class="current">Page {{ topics.number }} of {{ topics.paginator.num_pages }}.</span>
+					{% if topics.has_next %}
+						<li class="next"><a href="?{% url_replace request 'page' topics.next_page_number %}">next <span aria-hidden="true">&rarr;</span></a></li>
+					{% endif %}
+				</ul>
+			</nav>
+
+			<ol class="breadcrumb">
+				<li><a href="/">Home</a></li>
+				<li class="active">{{ forum.name }}</li>
+			</ol>
+		
+		</div>
+	</div>
+</div>
 
 {% endblock %}

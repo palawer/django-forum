@@ -29,6 +29,7 @@ class Migration(migrations.Migration):
                 ('topics', models.PositiveIntegerField(default=0)),
                 ('posts', models.PositiveIntegerField(default=0)),
                 ('order', models.IntegerField(default=0)),
+                ('slug', models.SlugField(null=True, blank=True)),
                 ('category', models.ForeignKey(to='main.Category')),
             ],
         ),
@@ -45,6 +46,20 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
+            name='Profile',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('posts', models.PositiveIntegerField(default=0)),
+                ('timezone', models.FloatField(default=0)),
+                ('avatar', models.CharField(max_length=100)),
+                ('birthday', models.DateField(null=True, blank=True)),
+                ('gender', models.CharField(max_length=10)),
+                ('website', models.URLField()),
+                ('location', models.CharField(max_length=200)),
+                ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL)),
+            ],
+        ),
+        migrations.CreateModel(
             name='Topic',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
@@ -54,6 +69,7 @@ class Migration(migrations.Migration):
                 ('created', models.DateTimeField(default=django.utils.timezone.now)),
                 ('updated', models.DateTimeField(null=True, blank=True)),
                 ('deleted', models.BooleanField(default=False)),
+                ('slug', models.SlugField(null=True, blank=True)),
                 ('first_post', models.ForeignKey(related_name='first_topic_post', to='main.Post')),
                 ('forum', models.ForeignKey(to='main.Forum')),
                 ('last_post', models.ForeignKey(related_name='last_topic_post', to='main.Post')),
