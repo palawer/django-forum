@@ -3,11 +3,22 @@
 {% block title %}{{ profile.username }}{% endblock %}
 {% block content %}
 
-<div class="container">
+<div style="background:#fafafa">
+<div class="wrap">
 	<div class="row">
 		<div class="col-md-12">
 			
+			
+				
 			<h2>{{ profile.username }}</h2>
+			
+			<ul class="nav nav-tabs">
+				<li role="presentation" class="active"><a href="{{ profile.profile.url }}">Home</a></li>
+				<li role="presentation"><a href="{{ profile.profile.url }}/topics">Topics</a></li>
+				<li role="presentation"><a href="{{ profile.profile.url}}/posts">Posts</a></li>
+			</ul>
+			
+			</div>
 			
 		</div>
 	</div>

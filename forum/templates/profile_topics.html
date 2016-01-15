@@ -1,24 +1,23 @@
 {% extends "base.html" %}
 {% load extras %}
-{% block title %}{{ forum.name }}{% endblock %}
+{% block title %}{{ profile.username }}{% endblock %}
 {% block content %}
 
-<div class="wrap">
+<div class="container">
 	<div class="row">
 		<div class="col-md-12">
 			
-			<h2 class="topic-title">{{ forum.name }}</h2>
-
-			<ol class="breadcrumb">
-				<li><a href="/">Home</a></li>
-				<li class="active">{{ forum.name }}</li>
-			</ol>
+			<h2>{{ profile.username }}</h2>
 			
-			<div class="topics">
+			<ul class="nav nav-tabs">
+				<li role="presentation"><a href="{{ profile.profile.url }}">Home</a></li>
+				<li role="presentation" class="active"><a href="{{ profile.profile.url }}/topics">Topics</a></li>
+				<li role="presentation"><a href="{{ profile.profile.url}}/posts">Posts</a></li>
+			</ul>
+			
 			{% for topic in topics %}
 				{% include "topic_row.html" %}
 			{% endfor %}
-			</div>
 			
 			<nav>
 				<ul class="pager">
@@ -31,12 +30,7 @@
 					{% endif %}
 				</ul>
 			</nav>
-
-			<ol class="breadcrumb">
-				<li><a href="/">Home</a></li>
-				<li class="active">{{ forum.name }}</li>
-			</ol>
-		
+			
 		</div>
 	</div>
 </div>

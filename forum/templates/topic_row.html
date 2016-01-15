@@ -1,0 +1,22 @@
+<div class="row" style="border-bottom:1px solid #EEE;padding-bottom:20px;margin-bottom:20px;">
+	<div class="col-md-2">
+		<div class="topic-count">
+			{% if topic.replies > 0 %}
+				{{ topic.replies }}
+			{% else %}
+				<span style="color:#e74c3c">Nuevo</span>
+			{% endif %}
+		</div>
+		{% if topic.replies > 0 %}
+			<div class="topic-replies">Respuestas</div>
+		{% endif %}
+	</div>
+	<div class="col-md-10">
+		<div class="topic-row">
+			<h3><a href="{{ topic.url }}">{{ topic.title }}</a></h3>
+			<div class="topic-author">Por <a href="{{ topic.user.profile.url }}">{{ topic.user.username }}</a> a las {{ topic.created|date:"d M Y H:i" }}</div>
+			<div class="topic-content">{{ topic.first_post.content|truncatechars:200 }}</div>
+			<div class="topic-forum"><a href="{{ topic.forum.url }}">{{ topic.forum.name }}</a></div>
+		</div>
+	</div>
+</div>

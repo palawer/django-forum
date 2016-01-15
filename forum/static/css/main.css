@@ -1,54 +1,80 @@
 body {
-    padding-top: 70px;
-    background:#FBFBFB;
+    padding-top:50px;
+    background:#FFF;
 }
 
 h1, h2, h3 {
     margin-top: 0;
 }
 
-.navbar-default .navbar-brand {
-    color:#e74c3c;
-    font-size:200%;
+.wrap {
+    width:980px;
+    margin-right: auto;
+    margin-left: auto;
 }
 
+.navbar-default {background:#f5f5f5;border-color:#e5e5e5}
+.navbar-default .navbar-brand {font-size:200%;}
+.navbar-default .navbar-nav>li>a {}
 
-.topic-row {
-    background:#FFF;
-    border-bottom:1px solid #DDD;
-    padding:6px 0;
-}
+.nav-tabs {}
 
-.topic-row h3 {
-    margin:0 0 5px;
-    font-size:17.5px;
-}
-.topic-row h3 a {
-    color: #555;
-}
+.sidebar {background:#FFF;padding:20px;border:1px solid #EEE;}
+.sidebar ul li {border-bottom: 1px solid #e2e2e2;padding: 7px 0;}
+.sidebar ul li a {color: #333;font-weight: bold;}
+
+.emoji {width:24px;height:24px;}
+
+.topics {background:#FFF;border:1px solid #EEE;padding:20px;}
+.topic-row {background:#FFF;width:80%;}
+.topic-row h3 {margin:0 0 5px;font-size:20px;}
+.topic-row h3 a {}
 .topic-row p {margin:0;font-size:13px;}
+.topic-count {background:#f2f2f2;text-align:center;padding:10px;font-size:28px;color:#666;text-transform:uppercase;}
+.topic-replies {background:#e6e6e6;text-align:center;padding:6px;text-transform:uppercase;font-size:11px;color:gray}
+.topic-author {text-transform:uppercase;font-size:10px;color:#9c9c9c;margin:0 0 5px;}
+.topic-author a {}
+.topic-content {color:#444;margin:0 0 5px;}
+.topic-forum a {border:1px solid #e1e1e1;border-radius:3px;color:#666;font-size:12px;padding:4px 6px;}
 
-.sidebar ul li {
-    border-bottom: 1px solid #e2e2e2;
-    padding: 7px 0;
-}
-.sidebar ul li a {
-    color: #333;
-    font-weight: bold;
-}
 
-.topics {background:#EEE;padding:3px;}
-.topic-title {margin:0 0 20px 0;font-size:30px;font-weight:normal;color:#333}
+.topic-title {margin:20px 0 20px 0;font-size:30px;font-weight:normal;color:#333}
 
 
 .posts {}
-.post {margin-bottom:20px;}
+.posts:after {content:"";display: table;clear: both;}
+.posts-sidebar {float:right;width:200px;}
+.posts-content {width:760px;float:left;position:relative}
+
+.post {margin-bottom:20px;padding-left:64px;}
 .post-left {text-align:center;}
 .post-right {}
-.post-header {background:#FFF;border:1px solid #e7e7e7;padding:7px 14px;border-radius:5px 5px 0 0;border-bottom:none}
-.post-body {background:#FFF;border:1px solid #e7e7e7;padding:14px;border-top:none;border-bottom:none;}
-.post-footer {background:#FFF;border:1px solid #e7e7e7;padding:7px 14px;border-radius:0 0 5px 5px;}
-.post-avatar {width:60px;height:60px;border-radius:3px;margin:0 auto;}
+.post-header {background:#FFF;border:1px solid #ddd;padding:10px 15px 0;border-radius:5px 5px 0 0;border-bottom:none}
+.post-body {background:#FFF;border:1px solid #ddd;padding:15px;border-top:none;border-bottom:none;line-height: 1.6;font-size:14px;}
+.post-body img {max-width:100%;}
+.post-footer {background:#f7f7f7;border:1px solid #ddd;padding:6px 15px;border-radius:0 0 5px 5px;}
+.post-avatar {width:48px;height:48px;border-radius:3px;float:left;margin-left:-64px;}
 .post-user a {font-weight:bold;font-size:16px;color:#333}
-.post-date a {float:right;color:#999;}
-blockquote {font-size:14px;font-weight:300;line-height:1.25}
+.post-date a {float:right;color:#999;font-size:13px;}
+
+blockquote {
+    margin: 0 0 16px;
+    padding: 16px;
+    overflow: auto;
+    font-size: 85%;
+    line-height: 1.45;
+    background-color: #f7f7f7;
+    border-radius: 3px;
+}
+.quote-name {font-weight:bold;margin-bottom:16px;}
+
+
+
+
+
+
+
+
+
+
+

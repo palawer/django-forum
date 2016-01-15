@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load extras %}
+{% block title %}{{ profile.username }}{% endblock %}
+{% block content %}
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			
+			<h2>{{ profile.username }}</h2>
+			
+			<ul class="nav nav-tabs">
+				<li role="presentation"><a href="{{ profile.profile.url }}">Home</a></li>
+				<li role="presentation"><a href="{{ profile.profile.url }}/topics">Topics</a></li>
+				<li role="presentation" class="active"><a href="{{ profile.profile.url}}/posts">Posts</a></li>
+			</ul>
+			
+			<div class="posts">
+			{% for post in posts %}
+				{% include "post.html" %}
+			{% endfor %}
+			</div>
+			
+			<nav>
+				<ul class="pagination">
+					{% if posts.has_previous %}
+						<li>
+							<a href="?{% url_replace request 'page' posts.previous_page_number %}" aria-label="Previous">
+								<span aria-hidden="true">&laquo;</span>
+							</a>
+						</li>
+					{% endif %}
+
+					{% for page in posts.paginator.page_range %}
+						<li class="{% if posts.number == page  %}active{% endif %}">
+							<a href="?page={{ page }}">{{ page }}</a>
+						</li>
+					{% endfor %}
+
+					{% if posts.has_next %}
+						<li>
+							<a href="?{% url_replace request 'page' posts.next_page_number %}" aria-label="Next">
+								<span aria-hidden="true">&raquo;</span>
+							</a>
+						</li>
+					{% endif %}
+				</ul>
+			</nav>
+			
+		</div>
+	</div>
+</div>
+
+{% endblock %}

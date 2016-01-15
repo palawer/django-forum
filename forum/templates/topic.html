@@ -3,9 +3,7 @@
 {% block title %}{{ topic.title }}{% endblock %}
 {% block content %}
 
-<div class="container">
-	<div class="row">
-		<div class="col-md-12">
+<div class="wrap">
 
 <h2 class="topic-title">{{ topic.title }}</h2>
 
@@ -16,9 +14,12 @@
 </ol>
 
 <div class="posts">
-{% for post in posts %}
-	{% include "post.html" %}
-{% endfor %}
+	<div class="posts-sidebar">Right bar</div>
+	<div class="posts-content">
+		{% for post in posts %}
+			{% include "post_row.html" %}
+		{% endfor %}
+	</div>
 </div>
 
 <nav>
@@ -55,8 +56,6 @@
 	<li class="active">{{ topic.title }}</li>
 </ol>
 
-</div>
-</div>
 </div>
 
 {% endblock %}

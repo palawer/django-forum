@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import *
 
-TOPICS_PER_PAGE = 25
+TOPICS_PER_PAGE = 20
 POSTS_PER_PAGE = 10
 
 def index(request):
@@ -43,7 +43,9 @@ def forum(request, forum_id):
         'topics': topics,
     })
 
-def topic(request, topic_id):
+
+
+def topic_view(request, topic_id):
     topic = get_object_or_404(Topic, pk=topic_id)
     posts_list = Post.objects.filter(topic=topic)
     
@@ -61,14 +63,60 @@ def topic(request, topic_id):
         'posts': posts,
     })
 
-def profile(request, user_id):
+def topic_slug(request, topic_slug):
+    topic = get_object_or_404(Topic, slug=topic_slug)
+    return topic_view(request, topic.id)
+
+def post_view(request, post_id):
+    post = get_object_or_404(Post, pk=post_id)
+    return render(request, 'post.html', {
+        'post': post,
+    })
+
+def profile_view(request, user_id):
     profile = get_object_or_404(User, pk=user_id)
     
     return render(request, 'profile.html', {
         'profile': profile,
     })
 
+def profile_topics(request, user_id):
+    profile = get_object_or_404(User, pk=user_id)
+    
+    topics_list = Topic.objects.filter(user=user_id).order_by('-id')
+    
+    paginator = Paginator(topics_list, TOPICS_PER_PAGE)
+    page = request.GET.get('page')
+    try:
+        topics = paginator.page(page)
+    except PageNotAnInteger:
+        topics = paginator.page(1)
+    except EmptyPage:
+        topics = paginator.page(paginator.num_pages)
+    
+    return render(request, 'profile_topics.html', {
+        'profile': profile,
+        'topics': topics,
+    })
 
+def profile_posts(request, user_id):
+    profile = get_object_or_404(User, pk=user_id)
+    
+    posts_list = Post.objects.filter(user=user_id).order_by('-id')
+    
+    paginator = Paginator(posts_list, POSTS_PER_PAGE)
+    page = request.GET.get('page')
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+    
+    return render(request, 'profile_posts.html', {
+        'profile': profile,
+        'posts': posts,
+    })
 
 
 

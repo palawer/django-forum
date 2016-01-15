@@ -3,28 +3,16 @@
 {% block title %}Home{% endblock %}
 {% block content %}
 
-<div class="container">
+<div class="wrap">
 	<div class="row">
 		
-		<div class="col-md-3 sidebar">
-			<ul class="list-unstyled">
-			{% for forum in forums %}
-				<li><a href="{{ forum.url }}">{{ forum.name }}</a></li>
-			{% endfor %}
-			</ul>
-		</div>
-		
-		<div class="col-md-9 topics">
+		<div class="col-md-9">
+			
+			<div class="topics">
 			{% for topic in topics %}
-				<div class="row topic-row">
-					<div class="col-md-9">
-						<h3><a href="{{ topic.url }}">{{ topic.title }}</a></h3>
-						<p>por <a href="">{{ topic.user.username }}</a> el {{ topic.created|date:"M d, Y" }} en <a href="{{ topic.forum.url }}">{{ topic.forum.name }}</a></p>
-					</div>
-					<div class="col-md-1 text-center">{{ topic.replies }}</div>
-					<div class="col-md-2 text-center"><small>{{ topic.last_post.created|date:"M d, Y" }}<br/><a href="">{{ topic.last_post.user.username }}</a></small></div>
-				</div>
+				{% include "topic_row.html" %}
 			{% endfor %}
+			</div>
 			
 			<nav>
 				<ul class="pager">
@@ -38,6 +26,19 @@
 				</ul>
 			</nav>
 			
+			
+		</div>
+		
+		
+		
+		<div class="col-md-3">
+			<div class="sidebar">
+			<ul class="list-unstyled">
+			{% for forum in forums %}
+				<li><a href="{{ forum.url }}">{{ forum.name }}</a></li>
+			{% endfor %}
+			</ul>
+			</div>
 		</div>
 		
 	</div>

@@ -33,7 +33,7 @@ class Topic(models.Model):
     slug = models.SlugField(null=True, blank=True)
     
     def url(self):
-        return "/topic/%s" % self.id
+        return "/topic/%s" % self.slug
 
 class Post(models.Model):
     forum = models.ForeignKey('Forum')
@@ -71,95 +71,106 @@ class Post(models.Model):
         size_close = re.compile(r'\[\/size:([a-zA-Z0-9]+)\]', re.IGNORECASE)
         formatted_content = size_close.sub(r'</span>', formatted_content)
         
+        color_open = re.compile(r'\[color=([a-zA-Z]+):([a-zA-Z0-9]+)\]', re.IGNORECASE)
+        formatted_content = color_open.sub(r'<span style="color:\1;">', formatted_content)
+        color_close = re.compile(r'\[\/color:([a-zA-Z0-9]+)\]', re.IGNORECASE)
+        formatted_content = color_close.sub(r'</span>', formatted_content)
+        
         quote_open = re.compile(r'\[quote:([a-zA-Z0-9]+)=\"([a-zA-Z0-9-._]+)\"\]', re.IGNORECASE)
-        formatted_content = quote_open.sub(r'<blockquote>\2:<br/>', formatted_content)
+        formatted_content = quote_open.sub(r'<blockquote><div class="quote-name">\2</div>', formatted_content)
+        quote_open = re.compile(r'\[quote:([a-zA-Z0-9]+)\]', re.IGNORECASE)
+        formatted_content = quote_open.sub(r'<blockquote>', formatted_content)
         quote_close = re.compile(r'\[\/quote:([a-zA-Z0-9]+)\]', re.IGNORECASE)
         formatted_content = quote_close.sub(r'</blockquote>', formatted_content)
         
         youtube = re.compile(r'\[youtube\]http://(.+).youtube.com/watch\?v=([0-9A-Za-z-_]{11})(.*)\[/youtube\]', re.IGNORECASE)
         formatted_content = youtube.sub(r'<iframe width="560" height="315" src="https://www.youtube.com/embed/\2" frameborder="0" allowfullscreen></iframe>', formatted_content)
         
-        img = re.compile(r'\[img:([a-zA-Z0-9]+)\](.+)\[\/img:([a-zA-Z0-9]+)\]', re.IGNORECASE)
-        formatted_content = img.sub(r'<img src="\2" class="img-responsive">', formatted_content)
+        img = re.compile(r'\[img:([a-zA-Z0-9]+)\](.*?)\[\/img:([a-zA-Z0-9]+)\]', re.IGNORECASE)
+        formatted_content = img.sub(r'<img src="\2" alt="">', formatted_content)
         
-        smilies = [[1,":D","icon_biggrin.gif","Very Happy"],
-        [2,":-D","icon_biggrin.gif","Very Happy"],
-        [3,":grin:","icon_biggrin.gif","Very Happy"],
-        [4,":)","icon_smile.gif","Smile"],
-        [5,":-)","icon_smile.gif","Smile"],
-        [6,":smile:","icon_smile.gif","Smile"],
+        smilies = [
+        [1,":D","grinning.png","Very Happy"],
+        [2,":-D","grinning.png","Very Happy"],
+        [3,":grin:","grinning.png","Very Happy"],
+        [4,":)","grinning.png","Smile"],
+        [5,":-)","grinning.png","Smile"],
+        [6,":smile:","grinning.png","Smile"],
         [7,":(","icon_sad.gif","Sad"],
         [8,":-(","icon_sad.gif","Sad"],
         [9,":sad:","icon_sad.gif","Sad"],
-        [10,":o","icon_surprised.gif","Surprised"],
-        [11,":-o","icon_surprised.gif","Surprised"],
+        [10,":o","open_mouth.png","Surprised"],
+        [11,":-o","open_mouth.png","Surprised"],
         [12,":eek:","icon_surprised.gif","Surprised"],
-        [13,":shock:","icon_eek.gif","Shocked"],
-        [14,":?","icon_confused.gif","Confused"],
-        [15,":-?","icon_confused.gif","Confused"],
-        [16,":???:","icon_confused.gif","Confused"],
-        [17,"8)","icon_cool.gif","Cool"],
-        [18,"8-)","icon_cool.gif","Cool"],
-        [19,":cool:","icon_cool.gif","Cool"],
-        [20,":lol:","icon_lol.gif","Laughing"],
+        [13,":shock:","flushed.png","Shocked"],
+        [14,":?","confused.png","Confused"],
+        [15,":-?","confused.png","Confused"],
+        [16,":???:","confused.png","Confused"],
+        [17,"8)","sunglasses.png","Cool"],
+        [18,"8-)","sunglasses.png","Cool"],
+        [19,":cool:","sunglasses.png","Cool"],
+        [20,":lol:","satisfied.png","Laughing"],
         [21,":x","icon_mad.gif","Mad"],
         [22,":-x","icon_mad.gif","Mad"],
         [23,":mad:","icon_mad.gif","Mad"],
-        [24,":P","icon_razz.gif","Razz"],
-        [25,":-P","icon_razz.gif","Razz"],
-        [26,":razz:","icon_razz.gif","Razz"],
+        [24,":P","stuck_out_tongue.png","Razz"],
+        [25,":-P","stuck_out_tongue.png","Razz"],
+        [26,":razz:","stuck_out_tongue.png","Razz"],
         [27,":oops:","icon_redface.gif","Embarassed"],
-        [28,":cry:","icon_cry.gif","Crying or Very sad"],
-        [29,":evil:","icon_evil.gif","Evil or Very Mad"],
+        [28,":cry:","cry.png","Cry"],
+        [29,":evil:","imp.png","Evil"],
         [30,":twisted:","icon_twisted.gif","Twisted Evil"],
         [31,":roll:","icon_rolleyes.gif","Rolling Eyes"],
-        [32,":wink:","icon_wink.gif","Wink"],
-        [33,";)","icon_wink.gif","Wink"],
-        [34,";-)","icon_wink.gif","Wink"],
-        [35,":!:","icon_exclaim.gif","Exclamation"],
-        [36,":?:","icon_question.gif","Question"],
+        [32,":wink:","wink.png","Wink"],
+        [33,";)","wink.png","Wink"],
+        [34,";-)","wink.png","Wink"],
+        [35,":!:","exclamation.png","Exclamation"],
+        [36,":?:","question.png","Question"],
         [37,":idea:","icon_idea.gif","Idea"],
         [38,":arrow:","icon_arrow.gif","Arrow"],
         [39,":|","icon_neutral.gif","Neutral"],
         [40,":-|","icon_neutral.gif","Neutral"],
         [41,":neutral:","icon_neutral.gif","Neutral"],
-        [42,":mrgreen:","icon_mrgreen.gif","Mr. Green"],
-        [43,":-#","eusa_silenced.gif","Silenced"],
+        [42,":mrgreen:","grin.png","Mr. Green"],
+        [43,":-#","no_mouth.png","Silenced"],
         [44,":-s","eusa_eh.gif","Eh?"],
         [45,":aiwebs_001:","aiwebs_001.gif","aiwebs_001"],
         [46,":aiwebs_002:","aiwebs_002.gif","aiwebs_002"],
-        [47,":aiwebs_003:","aiwebs_003.gif","aiwebs_003"],
-        [48,":aiwebs_004:","aiwebs_004.gif","aiwebs_004"],
+        [47,":aiwebs_003:","disappointed.png","Disappointed"],
+        [48,":aiwebs_004:","blush.png","Blush"],
         [49,":aiwebs_005:","aiwebs_005.gif","aiwebs_005"],
         [50,":aiwebs_006:","aiwebs_006.gif","aiwebs_006"],
         [51,":aiwebs_007:","aiwebs_007.gif","aiwebs_007"],
         [52,":aiwebs_008:","aiwebs_008.gif","aiwebs_008"],
         [53,":aiwebs_009:","aiwebs_009.gif","aiwebs_009"],
-        [54,":aiwebs_010:","aiwebs_010.gif","aiwebs_010"],
-        [55,":aiwebs_011:","aiwebs_011.gif","aiwebs_011"],
+        [54,":aiwebs_010:","flushed.png","Flushed"],
+        [55,":aiwebs_011:","grin.png","Grin"],
         [56,":aiwebs_012:","aiwebs_012.gif","aiwebs_012"],
-        [57,":aiwebs_014:","aiwebs_014.gif","aiwebs_014"],
+        [57,":aiwebs_014:","relieved.png","Relieved"],
         [58,":aiwebs_015:","aiwebs_015.gif","aiwebs_015"],
-        [59,":aiwebs_016:","aiwebs_016.gif","aiwebs_016"],
-        [60,":aiwebs_017:","aiwebs_017.gif","aiwebs_017"],
-        [61,":aiwebs_018:","aiwebs_018.gif","aiwebs_018"],
+        [59,":aiwebs_016:","anguished.png","Anguished"],
+        [60,":aiwebs_017:","smile.png","Smile"],
+        [61,":aiwebs_018:","triumph.png","Triumph"],
         [62,":aiwebs_019:","aiwebs_019.gif","aiwebs_019"],
         [63,":aiwebs_020:","aiwebs_020.gif","aiwebs_020"],
         [64,":aiwebs_021:","aiwebs_021.gif","aiwebs_021"],
-        [65,":aiwebs_022:","aiwebs_022.gif","aiwebs_022"],
+        [65,":aiwebs_022:","relaxed.png","Relaxed"],
         [66,":aiwebs_023:","aiwebs_023.gif","aiwebs_023"],
         [67,":aiwebs_024:","aiwebs_024.gif","aiwebs_024"],
         [68,":aiwebs_025:","aiwebs_025.gif","aiwebs_025"],
         [69,":aiwebs_026:","aiwebs_026.gif","aiwebs_026"],
         [70,":aiwebs_027:","aiwebs_027.gif","aiwebs_027"],
         [71,":aiwebs_028:","aiwebs_028.gif","aiwebs_028"],
-        [72,":aiwebs_029:","aiwebs_029.gif","aiwebs_029"],
+        [72,":aiwebs_029:","confounded.png","Confounded"],
         [73,":aiwebs_030:","aiwebs_030.gif","aiwebs_030"],
-        [74,":aiwebs_033:","aiwebs_033.gif","aiwebs_033"]]
+        [74,":aiwebs_033:","innocent.png","Innocent.png"]]
         
         for pack in smilies:
-            img_url = '<img src="/static/img/smiles/%s" alt="%s">' % (pack[2], pack[3])
+            img_url = '<img src="/static/img/emojis/%s" class="emoji" alt="%s">' % (pack[2], pack[3])
             formatted_content = formatted_content.replace(pack[1], img_url)
+        
+        url = re.compile(r'todoslosforos', re.IGNORECASE)
+        formatted_content = url.sub(r'NOU-DOMINI', formatted_content)
         
         #link = re.compile(r"(http://[^ ]+)")
         #formatted_content = link.sub(r'<a href="\1" rel="nofollow" target="_blank">\1</a>', formatted_content)
@@ -167,7 +178,7 @@ class Post(models.Model):
         url_open = re.compile(r'\[url=(.*?)\](.*?)\[\/url\]', re.IGNORECASE)
         formatted_content = url_open.sub(r'<a href="\1" rel="nofollow" target="_blank">\2</a>', formatted_content)
         
-        #formatted_content = formatted_content.replace('\n', '<br />')
+        formatted_content = formatted_content.replace('\n', '<br />')
         return formatted_content
 
 
