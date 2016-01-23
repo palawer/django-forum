@@ -43,16 +43,24 @@
 	</div>
 	
 	<div class="sidebar">
+		
+		<div class="sidebar-info">
+			<div class="sidebar-info-title">topic info</div>
+			replies {{ topic.replies }}<br/>
+			views {{ topic.views }}<br/>
+			pages {{ posts.number }}/{{ posts.paginator.num_pages }}
+		</div>
+		
 		<div class="sidebar-panel">
-			<div class="sidebar-header">
+			<div class="sidebar-header" style="background:#fc9a24;">
 				Top users in this topic
 			</div>
-			<div class="sidebar-body">
+			<div class="sidebar-body" style="border-color:#fc9a24;">
 				{% for tmp in top_users %}
 					<div style="padding:10px;border-bottom:1px solid #EEE;">
-						<a href="{{ tmp.user.profile.url }}"><img src="{{ tmp.user.profile.avatar_url }}" width="24" height="24" alt="{{ tmp.user.username }}"></a>
-						<a href="{{ tmp.user.profile.url }}">{{ tmp.user.username }}</a>
-						{{ tmp.count }}
+						<div class="pull-right">{{ tmp.count }}</div>
+						<a href="{{ tmp.user.profile.url }}"><img src="{{ tmp.user.profile.avatar_url }}" style="border-radius:50%;" width="24" height="24" alt="{{ tmp.user.username }}"></a>
+						&nbsp;&nbsp;<a href="{{ tmp.user.profile.url }}">{{ tmp.user.username }}</a>
 					</div>
 				{% endfor %}
 			</div>

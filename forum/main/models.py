@@ -1,7 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
-import re
+from forum import settings
+import re, urllib, hashlib, os.path
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
@@ -17,7 +18,7 @@ class Forum(models.Model):
     slug = models.SlugField(null=True, blank=True)
     
     def url(self):
-        return "/forum/%s" % self.id
+        return "/forum/%s" % self.slug
 
 class Topic(models.Model):
     user = models.ForeignKey(User)
@@ -83,8 +84,8 @@ class Post(models.Model):
         quote_close = re.compile(r'\[\/quote:([a-zA-Z0-9]+)\]', re.IGNORECASE)
         formatted_content = quote_close.sub(r'</blockquote>', formatted_content)
         
-        youtube = re.compile(r'\[youtube\]http://(.+).youtube.com/watch\?v=([0-9A-Za-z-_]{11})(.*)\[/youtube\]', re.IGNORECASE)
-        formatted_content = youtube.sub(r'<iframe width="560" height="315" src="https://www.youtube.com/embed/\2" frameborder="0" allowfullscreen></iframe>', formatted_content)
+        youtube = re.compile(r'\[youtube\]http://(.+)youtube.com/watch\?v=([0-9A-Za-z-_]{11})(.*?)\[/youtube\]', re.IGNORECASE)
+        formatted_content = youtube.sub(r'<iframe src="https://www.youtube.com/embed/\2" frameborder="0" allowfullscreen></iframe>', formatted_content)
         
         img = re.compile(r'\[img:([a-zA-Z0-9]+)\](.*?)\[\/img:([a-zA-Z0-9]+)\]', re.IGNORECASE)
         formatted_content = img.sub(r'<img src="\2" alt="">', formatted_content)
@@ -170,7 +171,7 @@ class Post(models.Model):
             formatted_content = formatted_content.replace(pack[1], img_url)
         
         url = re.compile(r'todoslosforos', re.IGNORECASE)
-        formatted_content = url.sub(r'NOU-DOMINI', formatted_content)
+        formatted_content = url.sub(r'topicazo', formatted_content)
         
         #link = re.compile(r"(http://[^ ]+)")
         #formatted_content = link.sub(r'<a href="\1" rel="nofollow" target="_blank">\1</a>', formatted_content)
@@ -200,7 +201,14 @@ class Profile(models.Model):
     
     def avatar_url(self):
         if self.avatar:
-            return "/static/img/avatars/%s" % self.avatar
-        return "/static/img/avatar.gif"
+            file_path = "static/img/avatars/%s" % self.avatar
+            if os.path.exists(file_path):
+                return "/" + file_path
+        
+        # gravatar
+        default = 'https://i.imgur.com/SD5RRI6.gif'
+        gravatar_url = "http://www.gravatar.com/avatar/" + hashlib.md5(self.user.email.lower()).hexdigest() + "?"
+        gravatar_url += urllib.urlencode({'d':'retro', 's':str(100)}) # identicon
+        return gravatar_url
 
 User.profile = property(lambda u: Profile.objects.get_or_create(user=u)[0])

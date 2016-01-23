@@ -26,10 +26,10 @@ def index(request):
         'forums': forums,
     })
 
-def forum(request, forum_id):
-    forum = get_object_or_404(Forum, pk=forum_id)
-    topics_list = Topic.objects.filter(forum=forum_id).order_by('-last_post')
-    best_topics = Topic.objects.filter(forum=forum_id).order_by('-replies')[:10]
+def forum_view(request, slug):
+    forum = get_object_or_404(Forum, slug=slug)
+    topics_list = Topic.objects.filter(forum=forum.id).order_by('-last_post')
+    best_topics = Topic.objects.filter(forum=forum.id).order_by('-replies')[:10]
     
     paginator = Paginator(topics_list, TOPICS_PER_PAGE)
     page = request.GET.get('page')
@@ -95,6 +95,22 @@ def profile_view(request, user_id):
         'profile': profile,
     })
 
+def users_view(request):
+    users_list = User.objects.all()
+    
+    paginator = Paginator(users_list, 36)
+    page = request.GET.get('page')
+    try:
+        users = paginator.page(page)
+    except PageNotAnInteger:
+        users = paginator.page(1)
+    except EmptyPage:
+        users = paginator.page(paginator.num_pages)
+    
+    return render(request, 'users.html', {
+        'users': users
+    })
+
 def profile_topics(request, user_id):
     profile = get_object_or_404(User, pk=user_id)
     
@@ -133,6 +149,8 @@ def profile_posts(request, user_id):
         'posts': posts,
     })
 
-
-
+def search_view(request):
+    return render(request, 'search.html', {
+        
+    })
 
