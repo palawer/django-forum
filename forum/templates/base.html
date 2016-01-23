@@ -10,7 +10,7 @@
 </head>
 <body>
 
-<nav class="navbar navbar-default navbar-fixed-top">
+<nav class="navbar navbar-default">
 	<div class="wrap">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -44,7 +44,14 @@
 	</div>
 </nav>
 
+<div>
 {% block content %}{% endblock %}
+<div class="clearfix"></div>
+</div>
+
+<div class="footer">
+	<div class="wrap">Copyright 2016</div>
+</div>
 
 <script src="/static/js/jquery-1.11.3.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>

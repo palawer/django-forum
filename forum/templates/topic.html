@@ -4,57 +4,73 @@
 {% block content %}
 
 <div class="wrap">
-
-<h2 class="topic-title">{{ topic.title }}</h2>
-
-<ol class="breadcrumb">
-	<li><a href="/">Home</a></li>
-	<li><a href="{{ topic.forum.url }}">{{ topic.forum.name }}</a></li>
-	<li class="active">{{ topic.title }}</li>
-</ol>
-
-<div class="posts">
-	<div class="posts-sidebar">Right bar</div>
-	<div class="posts-content">
-		{% for post in posts %}
-			{% include "post_row.html" %}
-		{% endfor %}
+	
+	<h2 class="topic-title">{{ topic.title }}</h2>
+	
+	<div class="main">
+		
+		<ol class="breadcrumb">
+			<li><a href="/">Home</a></li>
+			<li><a href="{{ topic.forum.url }}">{{ topic.forum.name }}</a></li>
+			<li class="active">{{ topic.title }}</li>
+		</ol>
+		
+		<div class="posts">
+			<div class="posts-content">
+				{% for post in posts %}
+					{% include "post_row.html" %}
+				{% endfor %}
+			</div>
+		</div>
+		
+		<nav>
+			<ul class="pager">
+				{% if posts.has_previous %}
+					<li class="previous"><a href="?{% url_replace request 'page' posts.previous_page_number %}"><span aria-hidden="true">&larr;</span> previous</a></li>
+				{% endif %}
+				<span class="current">Page {{ posts.number }} of {{ posts.paginator.num_pages }}.</span>
+				{% if posts.has_next %}
+					<li class="next"><a href="?{% url_replace request 'page' posts.next_page_number %}">next <span aria-hidden="true">&rarr;</span></a></li>
+				{% endif %}
+			</ul>
+		</nav>
+		
+		<ol class="breadcrumb">
+			<li><a href="/">Home</a></li>
+			<li><a href="{{ topic.forum.url }}">{{ topic.forum.name }}</a></li>
+			<li class="active">{{ topic.title }}</li>
+		</ol>
 	</div>
-</div>
-
-<nav>
-	<ul class="pagination">
-		{% if posts.has_previous %}
-			<li>
-				<a href="?{% url_replace request 'page' posts.previous_page_number %}" aria-label="Previous">
-					<span aria-hidden="true">&laquo;</span>
-				</a>
-			</li>
-		{% endif %}
+	
+	<div class="sidebar">
+		<div class="sidebar-panel">
+			<div class="sidebar-header">
+				Top users in this topic
+			</div>
+			<div class="sidebar-body">
+				{% for tmp in top_users %}
+					<div style="padding:10px;border-bottom:1px solid #EEE;">
+						<a href="{{ tmp.user.profile.url }}"><img src="{{ tmp.user.profile.avatar_url }}" width="24" height="24" alt="{{ tmp.user.username }}"></a>
+						<a href="{{ tmp.user.profile.url }}">{{ tmp.user.username }}</a>
+						{{ tmp.count }}
+					</div>
+				{% endfor %}
+			</div>
+		</div>
 		
-		{% for page in posts.paginator.page_range %}
-			<li class="{% if posts.number == page  %}active{% endif %}">
-				<a href="?page={{ page }}">{{ page }}</a>
-			</li>
-		{% endfor %}
+		<div class="sidebar-panel">
+			<div class="sidebar-header">
+				Last Topics
+			</div>
+			<div class="sidebar-body">
+				{% for topic in topics %}
+					{% include "topic_row_mini.html" %}
+				{% endfor %}
+			</div>
+		</div>
 		
-		{% if posts.has_next %}
-			<li>
-				<a href="?{% url_replace request 'page' posts.next_page_number %}" aria-label="Next">
-					<span aria-hidden="true">&raquo;</span>
-				</a>
-			</li>
-		{% endif %}
-	</ul>
-</nav>
-
-<span class="current">Page {{ posts.number }} of {{ posts.paginator.num_pages }}.</span>
-
-<ol class="breadcrumb">
-	<li><a href="/">Home</a></li>
-	<li><a href="{{ topic.forum.url }}">{{ topic.forum.name }}</a></li>
-	<li class="active">{{ topic.title }}</li>
-</ol>
+		
+	</div>
 
 </div>
 

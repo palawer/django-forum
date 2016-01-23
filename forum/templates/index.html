@@ -4,44 +4,43 @@
 {% block content %}
 
 <div class="wrap">
-	<div class="row">
+	<div class="main">
 		
-		<div class="col-md-9">
-			
-			<div class="topics">
+		<div class="topics">
+			<div class="topics-body">
 			{% for topic in topics %}
 				{% include "topic_row.html" %}
 			{% endfor %}
 			</div>
-			
-			<nav>
-				<ul class="pager">
-					{% if topics.has_previous %}
-						<li class="previous"><a href="?{% url_replace request 'page' topics.previous_page_number %}"><span aria-hidden="true">&larr;</span> previous</a></li>
-					{% endif %}
-					<span class="current">Page {{ topics.number }} of {{ topics.paginator.num_pages }}.</span>
-					{% if topics.has_next %}
-						<li class="next"><a href="?{% url_replace request 'page' topics.next_page_number %}">next <span aria-hidden="true">&rarr;</span></a></li>
-					{% endif %}
-				</ul>
-			</nav>
-			
-			
 		</div>
-		
-		
-		
-		<div class="col-md-3">
-			<div class="sidebar">
-			<ul class="list-unstyled">
-			{% for forum in forums %}
-				<li><a href="{{ forum.url }}">{{ forum.name }}</a></li>
-			{% endfor %}
+			
+		<nav>
+			<ul class="pager">
+				{% if topics.has_previous %}
+					<li class="previous"><a href="?{% url_replace request 'page' topics.previous_page_number %}"><span aria-hidden="true">&larr;</span> previous</a></li>
+				{% endif %}
+				<span class="current">Page {{ topics.number }} of {{ topics.paginator.num_pages }}.</span>
+				{% if topics.has_next %}
+					<li class="next"><a href="?{% url_replace request 'page' topics.next_page_number %}">next <span aria-hidden="true">&rarr;</span></a></li>
+				{% endif %}
 			</ul>
-			</div>
-		</div>
-		
+		</nav>
 	</div>
+	
+	<div class="sidebar">
+		<div class="sidebar-header">Topics</div>
+		<div class="sidebar-body">
+			<ul class="list-unstyled">
+				{% for forum in forums %}
+					<li><a href="{{ forum.url }}">
+						<img src="/static/img/icons/forum{{ forum.id }}.png" width="16" height="16" class="pull-left" style="margin-right:10px;">
+						{{ forum.name }}
+					</a></li>
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+	
 </div>
 
 {% endblock %}

@@ -76,7 +76,7 @@ class Post(models.Model):
         color_close = re.compile(r'\[\/color:([a-zA-Z0-9]+)\]', re.IGNORECASE)
         formatted_content = color_close.sub(r'</span>', formatted_content)
         
-        quote_open = re.compile(r'\[quote:([a-zA-Z0-9]+)=\"([a-zA-Z0-9-._]+)\"\]', re.IGNORECASE)
+        quote_open = re.compile(r'\[quote:([a-zA-Z0-9]+)=\"([a-zA-Z0-9-._ ]+)\"\]', re.IGNORECASE)
         formatted_content = quote_open.sub(r'<blockquote><div class="quote-name">\2</div>', formatted_content)
         quote_open = re.compile(r'\[quote:([a-zA-Z0-9]+)\]', re.IGNORECASE)
         formatted_content = quote_open.sub(r'<blockquote>', formatted_content)

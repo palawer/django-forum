@@ -4,41 +4,54 @@
 {% block content %}
 
 <div class="wrap">
-	<div class="row">
-		<div class="col-md-12">
-			
-			<h2 class="topic-title">{{ forum.name }}</h2>
+	
+	<h2 class="topic-title">{{ forum.name }}</h2>
+	
+	<div class="main">
+		
+		<ol class="breadcrumb">
+			<li><a href="/">Home</a></li>
+			<li class="active">{{ forum.name }}</li>
+		</ol>
+		
+		<div class="topics">
+		{% for topic in topics %}
+			{% include "topic_row.html" %}
+		{% endfor %}
+		</div>
+		
+		<nav>
+			<ul class="pager">
+				{% if topics.has_previous %}
+					<li class="previous"><a href="?{% url_replace request 'page' topics.previous_page_number %}"><span aria-hidden="true">&larr;</span> previous</a></li>
+				{% endif %}
+				<span class="current">Page {{ topics.number }} of {{ topics.paginator.num_pages }}.</span>
+				{% if topics.has_next %}
+					<li class="next"><a href="?{% url_replace request 'page' topics.next_page_number %}">next <span aria-hidden="true">&rarr;</span></a></li>
+				{% endif %}
+			</ul>
+		</nav>
 
-			<ol class="breadcrumb">
-				<li><a href="/">Home</a></li>
-				<li class="active">{{ forum.name }}</li>
-			</ol>
-			
-			<div class="topics">
-			{% for topic in topics %}
+		<ol class="breadcrumb">
+			<li><a href="/">Home</a></li>
+			<li class="active">{{ forum.name }}</li>
+		</ol>
+		
+	</div>
+	
+	<div class="sidebar">
+		<div class="sidebar-header">
+			Top Topics
+		</div>
+		<div class="sidebar-body">
+			{% for topic in best_topics %}
 				{% include "topic_row.html" %}
 			{% endfor %}
-			</div>
-			
-			<nav>
-				<ul class="pager">
-					{% if topics.has_previous %}
-						<li class="previous"><a href="?{% url_replace request 'page' topics.previous_page_number %}"><span aria-hidden="true">&larr;</span> previous</a></li>
-					{% endif %}
-					<span class="current">Page {{ topics.number }} of {{ topics.paginator.num_pages }}.</span>
-					{% if topics.has_next %}
-						<li class="next"><a href="?{% url_replace request 'page' topics.next_page_number %}">next <span aria-hidden="true">&rarr;</span></a></li>
-					{% endif %}
-				</ul>
-			</nav>
-
-			<ol class="breadcrumb">
-				<li><a href="/">Home</a></li>
-				<li class="active">{{ forum.name }}</li>
-			</ol>
-		
 		</div>
 	</div>
+	
+	<div class="clearfix"></div>
+	
 </div>
 
 {% endblock %}
