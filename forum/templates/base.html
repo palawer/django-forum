@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Forum - {% block title %}{% endblock %}</title>
+	<title>Topicazo - {% block title %}{% endblock %}</title>
 	<link rel="stylesheet" async href="/static/css/bootstrap.min.css">
 	<link rel="stylesheet" async href="/static/css/main.css">
 </head>
@@ -17,7 +17,7 @@
 		</div>
 		
 		<ul class="nav navbar-nav">
-			<li><a href="/users">Users</a></li>
+			<li><a href="/users">Usuarios</a></li>
 		</ul>
 		
 		<!--
@@ -27,21 +27,23 @@
 			</div>
 			<button type="submit" class="btn btn-default">Submit</button>
 		</form>
+		-->
 		
 		<ul class="nav navbar-nav navbar-right">
 			<li><a href="#">Link</a></li>
 		</ul>
-		-->
 	</div>
 </nav>
 
-<div>
+<div class="content">
 	{% block content %}{% endblock %}
 	<div class="clearfix"></div>
 </div>
 
 <div class="footer">
-	<div class="wrap">topicazo.com &copy; 2016</div>
+	<div class="wrap">
+		topicazo.com &copy; 2016
+	</div>
 </div>
 
 <script src="/static/js/jquery-1.11.3.min.js"></script>

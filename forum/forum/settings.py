@@ -25,7 +25,7 @@ SECRET_KEY = 'sx___9qo4td428yu_o(^fp)37#j77hblrr-!%w48(vyhe@_5j+'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'topicazo.com']
 
 
 # Application definition

@@ -1,0 +1,13 @@
+<img src="{{ profile.profile.avatar_url }}" class="img-responsive" alt="{{ profile.username }}">
+
+<h2>{{ profile.username }}</h2>
+<h4 style="color:#777">Miembro desde el {{ profile.date_joined|date:"d M Y" }}</h4>
+
+<div class="sidebar-header">
+	Información
+</div>
+<div class="sidebar-body">
+	Mensajes: {{ profile.profile.posts }}<br/>
+	Location: {{ profile.profile.location }}<br/>
+	Website: {{ profile.profile.website }}<br/>
+</div>

@@ -3,31 +3,18 @@
 {% block title %}{{ profile.username }}{% endblock %}
 {% block content %}
 
-
 <div class="wrap">
-	
-	<div class="row">
-		<div class="col-md-3">
-			<img src="{{ profile.profile.avatar_url }}" class="img-responsive" alt="{{ profile.username }}">
-		</div>
-		
-		<div class="col-md-6">
-			<h2>{{ profile.username }}</h2>
-			<h4 style="color:#777">Miembro desde el {{ profile.date_joined|date:"d M Y" }}</h4>
-		</div>
-		
-		<div class="col-md-3">
-			hola k ase
-		</div>
+	<div class="sidebar sidebar-left">
+		{% include "profile_sidebar.html" %}
 	</div>
 	
-	
-	<ul class="nav nav-tabs">
-		<li role="presentation" class="active"><a href="{{ profile.profile.url }}">Home</a></li>
-		<li role="presentation"><a href="{{ profile.profile.url }}/topics">Topics</a></li>
-		<li role="presentation"><a href="{{ profile.profile.url}}/posts">Posts</a></li>
-	</ul>
-	
+	<div class="main">
+		<ul class="nav nav-tabs">
+			<li role="presentation" class="active"><a href="{{ profile.profile.url }}">Perfil</a></li>
+			<li role="presentation"><a href="{{ profile.profile.url }}/topics">Temas</a></li>
+			<li role="presentation"><a href="{{ profile.profile.url}}/posts">Mensajes</a></li>
+		</ul>
+	</div>
 </div>
 
 {% endblock %}

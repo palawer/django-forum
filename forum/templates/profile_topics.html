@@ -1,37 +1,37 @@
 {% extends "base.html" %}
 {% load extras %}
-{% block title %}{{ profile.username }}{% endblock %}
+{% block title %}Temas de {{ profile.username }}{% if topics.number > 1 %} - Página {{ topics.number }}{% endif %}{% endblock %}
 {% block content %}
 
-<div class="container">
-	<div class="row">
-		<div class="col-md-12">
-			
-			<h2>{{ profile.username }}</h2>
-			
-			<ul class="nav nav-tabs">
-				<li role="presentation"><a href="{{ profile.profile.url }}">Home</a></li>
-				<li role="presentation" class="active"><a href="{{ profile.profile.url }}/topics">Topics</a></li>
-				<li role="presentation"><a href="{{ profile.profile.url}}/posts">Posts</a></li>
+<div class="wrap">
+	<div class="sidebar sidebar-left">
+		{% include "profile_sidebar.html" %}
+	</div>
+	
+	<div class="main">
+		
+		<ul class="nav nav-tabs">
+			<li role="presentation"><a href="{{ profile.profile.url }}">Perfil</a></li>
+			<li role="presentation" class="active"><a href="{{ profile.profile.url }}/topics">Temas</a></li>
+			<li role="presentation"><a href="{{ profile.profile.url}}/posts">Mensajes</a></li>
+		</ul>
+		
+		{% for topic in topics %}
+			{% include "topic_row.html" %}
+		{% endfor %}
+		
+		<nav>
+			<ul class="pager">
+				{% if topics.has_previous %}
+					<li class="previous"><a href="?{% url_replace request 'page' topics.previous_page_number %}"><span aria-hidden="true">&larr;</span> anterior</a></li>
+				{% endif %}
+				<span class="current">Page {{ topics.number }} of {{ topics.paginator.num_pages }}.</span>
+				{% if topics.has_next %}
+					<li class="next"><a href="?{% url_replace request 'page' topics.next_page_number %}">siguiente <span aria-hidden="true">&rarr;</span></a></li>
+				{% endif %}
 			</ul>
-			
-			{% for topic in topics %}
-				{% include "topic_row.html" %}
-			{% endfor %}
-			
-			<nav>
-				<ul class="pager">
-					{% if topics.has_previous %}
-						<li class="previous"><a href="?{% url_replace request 'page' topics.previous_page_number %}"><span aria-hidden="true">&larr;</span> previous</a></li>
-					{% endif %}
-					<span class="current">Page {{ topics.number }} of {{ topics.paginator.num_pages }}.</span>
-					{% if topics.has_next %}
-						<li class="next"><a href="?{% url_replace request 'page' topics.next_page_number %}">next <span aria-hidden="true">&rarr;</span></a></li>
-					{% endif %}
-				</ul>
-			</nav>
-			
-		</div>
+		</nav>
+		
 	</div>
 </div>
 

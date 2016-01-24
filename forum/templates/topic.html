@@ -1,18 +1,18 @@
 {% extends "base.html" %}
 {% load extras %}
-{% block title %}{{ topic.title }}{% endblock %}
+{% block title %}{{ topic.title }}{% if posts.number > 1 %} - Página {{ posts.number }}{% endif %}{% endblock %}
 {% block content %}
 
 <div class="wrap">
 	
-	<h2 class="topic-title">{{ topic.title }}</h2>
+	<h2 class="topic-title"><a href="{{ topic.url }}">{{ topic.title }}</a></h2>
 	
 	<div class="main">
 		
 		<ol class="breadcrumb">
 			<li><a href="/">Home</a></li>
 			<li><a href="{{ topic.forum.url }}">{{ topic.forum.name }}</a></li>
-			<li class="active">{{ topic.title }}</li>
+			<li class="active"><a href="{{ topic.url }}">{{ topic.title }}</a></li>
 		</ol>
 		
 		<div class="posts">
@@ -26,11 +26,11 @@
 		<nav>
 			<ul class="pager">
 				{% if posts.has_previous %}
-					<li class="previous"><a href="?{% url_replace request 'page' posts.previous_page_number %}"><span aria-hidden="true">&larr;</span> previous</a></li>
+					<li class="previous"><a href="?{% url_replace request 'page' posts.previous_page_number %}"><span aria-hidden="true">&larr;</span> anterior</a></li>
 				{% endif %}
 				<span class="current">Page {{ posts.number }} of {{ posts.paginator.num_pages }}.</span>
 				{% if posts.has_next %}
-					<li class="next"><a href="?{% url_replace request 'page' posts.next_page_number %}">next <span aria-hidden="true">&rarr;</span></a></li>
+					<li class="next"><a href="?{% url_replace request 'page' posts.next_page_number %}">siguiente <span aria-hidden="true">&rarr;</span></a></li>
 				{% endif %}
 			</ul>
 		</nav>
@@ -38,26 +38,27 @@
 		<ol class="breadcrumb">
 			<li><a href="/">Home</a></li>
 			<li><a href="{{ topic.forum.url }}">{{ topic.forum.name }}</a></li>
-			<li class="active">{{ topic.title }}</li>
+			<li class="active"><a href="{{ topic.url }}">{{ topic.title }}</a></li>
 		</ol>
 	</div>
 	
 	<div class="sidebar">
 		
 		<div class="sidebar-info">
-			<div class="sidebar-info-title">topic info</div>
-			replies {{ topic.replies }}<br/>
-			views {{ topic.views }}<br/>
-			pages {{ posts.number }}/{{ posts.paginator.num_pages }}
+			<div class="sidebar-info-title">Información</div>
+			Respuestas: {{ topic.replies }}<br/>
+			Lecturas: {{ topic.views }}<br/>
+			Páginas: {{ posts.number }}/{{ posts.paginator.num_pages }}<br/>
+			Último mensaje: <a href="{{ topic.url }}?page={{ posts.paginator.num_pages }}#post-{{ last_post.id }}">{{ last_post.user.username }}</a>
 		</div>
 		
 		<div class="sidebar-panel">
 			<div class="sidebar-header" style="background:#fc9a24;">
-				Top users in this topic
+				Usuarios más activos
 			</div>
 			<div class="sidebar-body" style="border-color:#fc9a24;">
 				{% for tmp in top_users %}
-					<div style="padding:10px;border-bottom:1px solid #EEE;">
+					<div style="padding:8px 10px;border-bottom:1px solid #EEE;">
 						<div class="pull-right">{{ tmp.count }}</div>
 						<a href="{{ tmp.user.profile.url }}"><img src="{{ tmp.user.profile.avatar_url }}" style="border-radius:50%;" width="24" height="24" alt="{{ tmp.user.username }}"></a>
 						&nbsp;&nbsp;<a href="{{ tmp.user.profile.url }}">{{ tmp.user.username }}</a>
@@ -68,7 +69,7 @@
 		
 		<div class="sidebar-panel">
 			<div class="sidebar-header">
-				Last Topics
+				Últimos temas
 			</div>
 			<div class="sidebar-body">
 				{% for topic in topics %}

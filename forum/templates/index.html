@@ -1,10 +1,16 @@
 {% extends "base.html" %}
 {% load extras %}
-{% block title %}Home{% endblock %}
+{% block title %}Home{% if topics.number > 1 %} - Página {{ topics.number }}{% endif %}{% endblock %}
 {% block content %}
 
 <div class="wrap">
-	<h2 class="topic-title">Last topics</h2>
+	<div class="ad">
+		<p>Este sitio es el antiguo <b>todoslosforos.com</b> cerrado el año 2011 por no poder mantener los gastos del servidor.</p>
+		<p>Lanzamos este sitio para que se pueda consultar todo el contenido que los usuarios fueron creando durante años con tanto esfuerzo.</p>
+		<p>Este sitio ha sido desarrollado por <a href="https://twitter.com/guillemp" target="_blank"><b>@guillemp</b></a> i el código fuente se puede consultar en <a href="https://github.com/guillemp/django-forum" target="_blank"><b>GitHub</b></a>. ¡Gracias!</p>
+	</div>
+	
+	<h2 class="topic-title">Últimos mensajes</h2>
 	<div class="main">
 		
 		<div class="topics">
@@ -18,24 +24,26 @@
 		<nav>
 			<ul class="pager">
 				{% if topics.has_previous %}
-					<li class="previous"><a href="?{% url_replace request 'page' topics.previous_page_number %}"><span aria-hidden="true">&larr;</span> previous</a></li>
+					<li class="previous"><a href="?{% url_replace request 'page' topics.previous_page_number %}"><span aria-hidden="true">&larr;</span> anterior</a></li>
 				{% endif %}
 				<span class="current">Page {{ topics.number }} of {{ topics.paginator.num_pages }}.</span>
 				{% if topics.has_next %}
-					<li class="next"><a href="?{% url_replace request 'page' topics.next_page_number %}">next <span aria-hidden="true">&rarr;</span></a></li>
+					<li class="next"><a href="?{% url_replace request 'page' topics.next_page_number %}">siguiente <span aria-hidden="true">&rarr;</span></a></li>
 				{% endif %}
 			</ul>
 		</nav>
 	</div>
 	
 	<div class="sidebar">
-		<div class="sidebar-header">Topics</div>
+		<div class="sidebar-header">
+			Foros
+		</div>
 		<div class="sidebar-body">
 			<ul class="list-unstyled">
 				{% for forum in forums %}
 					<li><div class="pull-right" style="color:#999;">{{ forum.topics }}</div>
 						<a href="{{ forum.url }}">
-						<img src="/static/img/icons/forum{{ forum.id }}.png" width="16" height="16" class="pull-left" style="margin-right:10px;">
+						<img src="/static/img/icons/forum{{ forum.id }}.png" width="16" height="16" class="pull-left" style="margin-right:10px;" alt="{{ forum.name }}">
 						{{ forum.name }}
 					</a></li>
 				{% endfor %}

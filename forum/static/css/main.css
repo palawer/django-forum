@@ -7,20 +7,21 @@ a,a:hover,a:active,a:focus {color:#07c}
 iframe {min-width:560px;min-height:315px;}
 
 
-.wrap {
-    width:980px;
-    margin-right: auto;
-    margin-left: auto;
-}
+.wrap {width:980px;margin-right:auto;margin-left:auto;/*padding-right:15px;padding-left:15px;*/}
+.wrap:before {content:" ";display:table;}
+.wrap:after {content:" ";display:table;clear:both;}
 
 .navbar {}
 .navbar-default {}
-.navbar-default .navbar-brand {}
+.navbar-default .navbar-brand {font-size:200%;}
 .navbar-default .navbar-nav>li>a {}
+.nav-tabs {margin-bottom:20px;}
 
 .footer {background:#f8f8f8;text-align:center;padding:15px 0;margin-top:20px;border-top:1px solid #e7e7e7;}
-.main {width:650px;float:left;margin-right:30px;}
-.sidebar {width:300px;float:left;}
+.main {width:650px;float:left;}
+.sidebar {width:300px;float:left;margin-left:30px;}
+.sidebar-left {margin-right:30px;margin-left:0;}
+
 .sidebar ul {margin:0;}
 .sidebar ul li {border-bottom: 1px solid #eee;padding:7px;}
 .sidebar ul li a {color:#333;font-weight:normal;}
@@ -45,7 +46,8 @@ iframe {min-width:560px;min-height:315px;}
 .topic-content {color:#444;margin:0 0 5px;}
 .topic-forum a {display:block;background:#e4edf4;color:#3e6d8e;font-size:12px;padding:.25em .5em;line-height:1.4}
 
-.topic-title {margin:0 0 20px 0;padding:0 0 15px 0;font-size:24px;line-height:1.35;font-weight:normal;color:#222;border-bottom:1px solid #EEE;}
+.topic-title {margin:0 0 20px 0;padding:0 0 10px 0;font-size:24px;line-height:1.35;font-weight:normal;border-bottom:1px solid #EEE;}
+.topic-title, .topic-title a {color:#222;}
 
 .posts {}
 .posts:after, .post:after {content:"";display:table;clear:both;}
@@ -73,12 +75,11 @@ blockquote {
 .quote-name {font-weight:bold;margin-bottom:5px;}
 .emoji {width:24px;height:24px;}
 
-.breadcrumb {
-    padding:6px 15px;
-    border-radius:0;
-}
+.breadcrumb {padding:6px 15px;border-radius:0;}
+.breadcrumb > .active a {color:#777;}
 
-
+.ad {background:#EEE;border:1px solid #CCC;padding:10px 15px;margin-bottom:20px;}
+.ad p {margin:0}
 
 
 

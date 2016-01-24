@@ -1,24 +1,26 @@
 {% extends "base.html" %}
 {% load extras %}
-{% block title %}{{ profile.username }}{% endblock %}
+{% block title %}Mensaje #{{ post.id}} de {{ post.user.username }}{% endblock %}
 {% block content %}
 
 <div class="wrap">
-
-			
-			<h2 class="topic-title">{{ post.topic.title }}</h2>
-			
-			<ol class="breadcrumb">
-				<li><a href="/">Home</a></li>
-				<li><a href="{{ post.topic.forum.url }}">{{ post.topic.forum.name }}</a></li>
-				<li class="active"><a href="{{ post.topic.url }}">{{ post.topic.title }}</a></li>
-			</ol>
-			
-			<div class="posts">
-				{% include "post_row.html" %}
-			</div>
-			
-
+	<h2 class="topic-title"><a href="{{ post.topic.url }}{{ url }}">{{ post.topic.title }}</a></h2>
+	
+	<ol class="breadcrumb">
+		<li><a href="/">Home</a></li>
+		<li><a href="{{ post.topic.forum.url }}">{{ post.topic.forum.name }}</a></li>
+		<li class="active"><a href="{{ post.topic.url }}{{ url }}">{{ post.topic.title }}</a></li>
+	</ol>
+	
+	<div class="posts">
+		{% include "post_row.html" %}
+	</div>
+	
+	<ol class="breadcrumb">
+		<li><a href="/">Home</a></li>
+		<li><a href="{{ post.topic.forum.url }}">{{ post.topic.forum.name }}</a></li>
+		<li class="active"><a href="{{ post.topic.url }}{{ url }}">{{ post.topic.title }}</a></li>
+	</ol>
 </div>
 
 {% endblock %}

@@ -1,20 +1,20 @@
 {% extends "base.html" %}
 {% load extras %}
-{% block title %}Users{% endblock %}
+{% block title %}Usuarios{% if users.number > 1 %} - Página {{ users.number }}{% endif %}{% endblock %}
 {% block content %}
 
 <div class="wrap">
-	<h2 class="topic-title">Users</h2>
+	<h2 class="topic-title">Listado de usuarios</h2>
 	
 	{% for user in users %}
 		{% if forloop.first %}<div class="row">{% endif %}
 		<div class="col-sm-3" style="margin-bottom:25px;">
 			
 			<a href="{{ user.profile.url }}">
-				<img src="{{ user.profile.avatar_url }}" class="post-avatar" alt="{{ user.username }}">
-				{{ user.username }}<br/>
-				<span style="color:#999">{{ user.profile.posts }} posts</span>
+				<img src="{{ user.profile.avatar_url }}" class="post-avatar pull-left" style="margin-right:10px;" alt="{{ user.username }}">
 			</a>
+			<a href="{{ user.profile.url }}">{{ user.username }}</a><br/>
+			<span style="color:#999">{{ user.profile.posts }} posts</span>
 			
 		</div>
 		{% if forloop.counter|divisibleby:4 %}</div><div class="row">{% endif %}
@@ -24,11 +24,11 @@
 	<nav>
 		<ul class="pager">
 			{% if users.has_previous %}
-				<li class="previous"><a href="?{% url_replace request 'page' users.previous_page_number %}"><span aria-hidden="true">&larr;</span> previous</a></li>
+				<li class="previous"><a href="?{% url_replace request 'page' users.previous_page_number %}"><span aria-hidden="true">&larr;</span> anterior</a></li>
 			{% endif %}
 			<span class="current">Page {{ users.number }} of {{ users.paginator.num_pages }}.</span>
 			{% if users.has_next %}
-				<li class="next"><a href="?{% url_replace request 'page' users.next_page_number %}">next <span aria-hidden="true">&rarr;</span></a></li>
+				<li class="next"><a href="?{% url_replace request 'page' users.next_page_number %}">siguiente <span aria-hidden="true">&rarr;</span></a></li>
 			{% endif %}
 		</ul>
 	</nav>
