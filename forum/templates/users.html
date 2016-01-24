@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load extras %}
+{% load humanize %}
 {% block title %}Usuarios{% if users.number > 1 %} - Página {{ users.number }}{% endif %}{% endblock %}
 {% block content %}
 
@@ -14,7 +15,7 @@
 				<img src="{{ user.profile.avatar_url }}" class="post-avatar pull-left" style="margin-right:10px;" alt="{{ user.username }}">
 			</a>
 			<a href="{{ user.profile.url }}">{{ user.username }}</a><br/>
-			<span style="color:#999">{{ user.profile.posts }} posts</span>
+			<span style="color:#999">{{ user.profile.posts|intcomma }} posts</span>
 			
 		</div>
 		{% if forloop.counter|divisibleby:4 %}</div><div class="row">{% endif %}
@@ -26,7 +27,7 @@
 			{% if users.has_previous %}
 				<li class="previous"><a href="?{% url_replace request 'page' users.previous_page_number %}"><span aria-hidden="true">&larr;</span> anterior</a></li>
 			{% endif %}
-			<span class="current">Page {{ users.number }} of {{ users.paginator.num_pages }}.</span>
+			<span class="current">Página {{ users.number }} de {{ users.paginator.num_pages }}.</span>
 			{% if users.has_next %}
 				<li class="next"><a href="?{% url_replace request 'page' users.next_page_number %}">siguiente <span aria-hidden="true">&rarr;</span></a></li>
 			{% endif %}

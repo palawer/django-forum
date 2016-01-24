@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load extras %}
+{% load humanize %}
 {% block title %}Home{% if topics.number > 1 %} - Página {{ topics.number }}{% endif %}{% endblock %}
 {% block content %}
 
@@ -7,7 +8,7 @@
 	<div class="ad">
 		<p>Este sitio es el antiguo <b>todoslosforos.com</b> cerrado el año 2011 por no poder mantener los gastos del servidor.</p>
 		<p>Lanzamos este sitio para que se pueda consultar todo el contenido que los usuarios fueron creando durante años con tanto esfuerzo.</p>
-		<p>Este sitio ha sido desarrollado por <a href="https://twitter.com/guillemp" target="_blank"><b>@guillemp</b></a> i el código fuente se puede consultar en <a href="https://github.com/guillemp/django-forum" target="_blank"><b>GitHub</b></a>. ¡Gracias!</p>
+		<p>Este sitio ha sido desarrollado por <a href="https://twitter.com/guillemp" target="_blank"><b>@guillemp</b></a> i el código fuente se puede consultar en <a href="https://github.com/guillemp/django-forum" target="_blank"><b>GitHub</b></a>.</p>
 	</div>
 	
 	<h2 class="topic-title">Últimos mensajes</h2>
@@ -26,7 +27,7 @@
 				{% if topics.has_previous %}
 					<li class="previous"><a href="?{% url_replace request 'page' topics.previous_page_number %}"><span aria-hidden="true">&larr;</span> anterior</a></li>
 				{% endif %}
-				<span class="current">Page {{ topics.number }} of {{ topics.paginator.num_pages }}.</span>
+				<span class="current">Página {{ topics.number }} de {{ topics.paginator.num_pages }}.</span>
 				{% if topics.has_next %}
 					<li class="next"><a href="?{% url_replace request 'page' topics.next_page_number %}">siguiente <span aria-hidden="true">&rarr;</span></a></li>
 				{% endif %}
@@ -35,19 +36,28 @@
 	</div>
 	
 	<div class="sidebar">
-		<div class="sidebar-header">
-			Foros
+		<div class="sidebar-panel">
+			<div class="sidebar-header">
+				Foros
+			</div>
+			<div class="sidebar-body">
+				<ul class="list-unstyled">
+					{% for forum in forums %}
+						<li><div class="pull-right" style="color:#999;">{{ forum.topics|intcomma }}</div>
+							<a href="{{ forum.url }}">
+							<img src="/static/img/icons/forum{{ forum.id }}.png" width="16" height="16" class="pull-left" style="margin-right:10px;" alt="{{ forum.name }}">
+							{{ forum.name }}
+						</a></li>
+					{% endfor %}
+				</ul>
+			</div>
 		</div>
-		<div class="sidebar-body">
-			<ul class="list-unstyled">
-				{% for forum in forums %}
-					<li><div class="pull-right" style="color:#999;">{{ forum.topics }}</div>
-						<a href="{{ forum.url }}">
-						<img src="/static/img/icons/forum{{ forum.id }}.png" width="16" height="16" class="pull-left" style="margin-right:10px;" alt="{{ forum.name }}">
-						{{ forum.name }}
-					</a></li>
-				{% endfor %}
-			</ul>
+		
+		<div class="sidebar-info">
+			<div class="sidebar-info-title">Información</div>
+			Temas: {{ total_topics|intcomma }}<br/>
+			Mensajes: {{ total_posts|intcomma }}<br/>
+			Usuarios: {{ total_users|intcomma }}
 		</div>
 	</div>
 	

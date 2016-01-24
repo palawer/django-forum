@@ -13,7 +13,7 @@ iframe {min-width:560px;min-height:315px;}
 
 .navbar {}
 .navbar-default {}
-.navbar-default .navbar-brand {font-size:200%;}
+.navbar-default .navbar-brand {font-size:150%;color:#222;text-transform:uppercase}
 .navbar-default .navbar-nav>li>a {}
 .nav-tabs {margin-bottom:20px;}
 
@@ -51,11 +51,11 @@ iframe {min-width:560px;min-height:315px;}
 
 .posts {}
 .posts:after, .post:after {content:"";display:table;clear:both;}
-.post {margin-bottom:15px;border:1px solid #ddd;border-radius:0;}
-.post-left {float:left;margin:15px;}
-.post-right {}
-.post-header {padding:10px 15px 0;}
-.post-body {padding:15px;line-height:1.6;font-size:14px;}
+.post {margin-bottom:15px;padding:12px 12px 0;border:1px solid #ddd;border-radius:0;}
+.post-left {float:left;}
+.post-right {margin-left:60px;}
+.post-header {}
+.post-body {padding:12px 0 10px;line-height:1.6;font-size:14px;overflow:hidden}
 .post-body img {max-width:100%;}
 .post-footer {background:#f7f7f7;border-top:1px solid #ddd;padding:6px 15px;border-radius:0 0 5px 5px;}
 .post-avatar {width:48px;height:48px;border-radius:3px;}

@@ -12,6 +12,10 @@ def index(request):
     topics_list = Topic.objects.exclude(forum=6).exclude(forum=18).order_by('-last_post')
     forums = Forum.objects.exclude(id=6).exclude(id=18).order_by('category__order', 'order')
     
+    total_topics = sum([forum.topics for forum in forums])
+    total_posts = sum([forum.posts for forum in forums])
+    total_users = User.objects.all().count()
+    
     paginator = Paginator(topics_list, TOPICS_PER_PAGE)
     page = request.GET.get('page')
     try:
@@ -24,6 +28,9 @@ def index(request):
     return render(request, 'index.html', {
         'topics': topics,
         'forums': forums,
+        'total_topics': total_topics,
+        'total_posts': total_posts,
+        'total_users': total_users,
     })
 
 def forum_view(request, slug):
@@ -103,13 +110,6 @@ def post_view(request, post_id):
 
 def profile_view(request, username):
     profile = get_object_or_404(User, username=username)
-    
-    return render(request, 'profile.html', {
-        'profile': profile,
-    })
-
-def profile_topics(request, username):
-    profile = get_object_or_404(User, username=username)
     topics_list = Topic.objects.exclude(forum=6).exclude(forum=18).filter(user=profile.id).order_by('-id')
     
     paginator = Paginator(topics_list, TOPICS_PER_PAGE)
@@ -121,7 +121,7 @@ def profile_topics(request, username):
     except EmptyPage:
         topics = paginator.page(paginator.num_pages)
     
-    return render(request, 'profile_topics.html', {
+    return render(request, 'profile.html', {
         'profile': profile,
         'topics': topics,
     })
@@ -145,7 +145,7 @@ def profile_posts(request, username):
     })
 
 def users_view(request):
-    users_list = User.objects.all()
+    users_list = User.objects.filter(id__gt=0)
 
     paginator = Paginator(users_list, 36)
     page = request.GET.get('page')

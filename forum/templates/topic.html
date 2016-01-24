@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load extras %}
+{% load humanize %}
 {% block title %}{{ topic.title }}{% if posts.number > 1 %} - Página {{ posts.number }}{% endif %}{% endblock %}
 {% block content %}
 
@@ -28,7 +29,7 @@
 				{% if posts.has_previous %}
 					<li class="previous"><a href="?{% url_replace request 'page' posts.previous_page_number %}"><span aria-hidden="true">&larr;</span> anterior</a></li>
 				{% endif %}
-				<span class="current">Page {{ posts.number }} of {{ posts.paginator.num_pages }}.</span>
+				<span class="current">Página {{ posts.number }} de {{ posts.paginator.num_pages }}.</span>
 				{% if posts.has_next %}
 					<li class="next"><a href="?{% url_replace request 'page' posts.next_page_number %}">siguiente <span aria-hidden="true">&rarr;</span></a></li>
 				{% endif %}
@@ -46,9 +47,9 @@
 		
 		<div class="sidebar-info">
 			<div class="sidebar-info-title">Información</div>
-			Respuestas: {{ topic.replies }}<br/>
-			Lecturas: {{ topic.views }}<br/>
-			Páginas: {{ posts.number }}/{{ posts.paginator.num_pages }}<br/>
+			Respuestas: {{ topic.replies|intcomma }}<br/>
+			Lecturas: {{ topic.views|intcomma }}<br/>
+			Página: {{ posts.number }} de {{ posts.paginator.num_pages }}<br/>
 			Último mensaje: <a href="{{ topic.url }}?page={{ posts.paginator.num_pages }}#post-{{ last_post.id }}">{{ last_post.user.username }}</a>
 		</div>
 		
@@ -59,7 +60,7 @@
 			<div class="sidebar-body" style="border-color:#fc9a24;">
 				{% for tmp in top_users %}
 					<div style="padding:8px 10px;border-bottom:1px solid #EEE;">
-						<div class="pull-right">{{ tmp.count }}</div>
+						<div class="pull-right">{{ tmp.count|intcomma }}</div>
 						<a href="{{ tmp.user.profile.url }}"><img src="{{ tmp.user.profile.avatar_url }}" style="border-radius:50%;" width="24" height="24" alt="{{ tmp.user.username }}"></a>
 						&nbsp;&nbsp;<a href="{{ tmp.user.profile.url }}">{{ tmp.user.username }}</a>
 					</div>

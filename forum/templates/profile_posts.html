@@ -4,36 +4,30 @@
 {% block content %}
 
 <div class="wrap">
-	<div class="sidebar sidebar-left">
-		{% include "profile_sidebar.html" %}
+	{% include "profile_sidebar.html" %}
+	
+	<ul class="nav nav-tabs">
+		<li role="presentation"><a href="{{ profile.profile.url }}">Temas</a></li>
+		<li role="presentation" class="active"><a href="{{ profile.profile.url}}/posts">Mensajes</a></li>
+	</ul>
+	
+	<div class="posts">
+	{% for post in posts %}
+		{% include "post_row.html" %}
+	{% endfor %}
 	</div>
-	<div class="main">
-		
-		<ul class="nav nav-tabs">
-			<li role="presentation"><a href="{{ profile.profile.url }}">Perfil</a></li>
-			<li role="presentation"><a href="{{ profile.profile.url }}/topics">Temas</a></li>
-			<li role="presentation" class="active"><a href="{{ profile.profile.url}}/posts">Mensajes</a></li>
+	
+	<nav>
+		<ul class="pager">
+			{% if posts.has_previous %}
+				<li class="previous"><a href="?{% url_replace request 'page' posts.previous_page_number %}"><span aria-hidden="true">&larr;</span> anterior</a></li>
+			{% endif %}
+			<span class="current">Página {{ posts.number }} de {{ posts.paginator.num_pages }}.</span>
+			{% if posts.has_next %}
+				<li class="next"><a href="?{% url_replace request 'page' posts.next_page_number %}">siguiente <span aria-hidden="true">&rarr;</span></a></li>
+			{% endif %}
 		</ul>
-		
-		<div class="posts">
-		{% for post in posts %}
-			{% include "post_row.html" %}
-		{% endfor %}
-		</div>
-		
-		<nav>
-			<ul class="pager">
-				{% if posts.has_previous %}
-					<li class="previous"><a href="?{% url_replace request 'page' posts.previous_page_number %}"><span aria-hidden="true">&larr;</span> siguiente</a></li>
-				{% endif %}
-				<span class="current">Page {{ posts.number }} of {{ posts.paginator.num_pages }}.</span>
-				{% if posts.has_next %}
-					<li class="next"><a href="?{% url_replace request 'page' posts.next_page_number %}">anterior <span aria-hidden="true">&rarr;</span></a></li>
-				{% endif %}
-			</ul>
-		</nav>
-		
-	</div>
+	</nav>
 </div>
 
 {% endblock %}

@@ -26,7 +26,7 @@ def bbcode(content):
     color_close = re.compile(r'\[\/color:([a-zA-Z0-9]+)\]', re.IGNORECASE)
     content = color_close.sub(r'</span>', content)
     
-    quote_open = re.compile(r'\[quote:([a-zA-Z0-9]+)=\"([a-zA-Z0-9-._ ]+)\"\]', re.IGNORECASE)
+    quote_open = re.compile(r'\[quote:([a-zA-Z0-9]+)=\"([a-zA-Z0-9-._@ ]+)\"\]', re.IGNORECASE)
     content = quote_open.sub(r'<blockquote><div class="quote-name">\2</div>', content)
     quote_open = re.compile(r'\[quote:([a-zA-Z0-9]+)\]', re.IGNORECASE)
     content = quote_open.sub(r'<blockquote>', content)
@@ -42,7 +42,7 @@ def bbcode(content):
     url = re.compile(r'todoslosforos', re.IGNORECASE)
     content = url.sub(r'topicazo', content)
     
-    #link = re.compile(r"(http://[^ ]+)")
+    #link = re.compile(r"(https?:\/\/[^\s]+)")
     #content = link.sub(r'<a href="\1" rel="nofollow" target="_blank">\1</a>', content)
     
     url_open = re.compile(r'\[url=(.*?)\](.*?)\[\/url\]', re.IGNORECASE)
@@ -58,12 +58,12 @@ def emojis(content):
         [4,":)","grinning.png","Smile"],
         [5,":-)","grinning.png","Smile"],
         [6,":smile:","grinning.png","Smile"],
-        [7,":(","icon_sad.gif","Sad"],
-        [8,":-(","icon_sad.gif","Sad"],
-        [9,":sad:","icon_sad.gif","Sad"],
+        [7,":(","pensive.png","Sad"],
+        [8,":-(","pensive.png","Sad"],
+        [9,":sad:","pensive.png","Sad"],
         [10,":o","open_mouth.png","Surprised"],
         [11,":-o","open_mouth.png","Surprised"],
-        [12,":eek:","icon_surprised.gif","Surprised"],
+        [12,":eek:","smiley.png","Surprised"],
         [13,":shock:","flushed.png","Shocked"],
         [14,":?","confused.png","Confused"],
         [15,":-?","confused.png","Confused"],
@@ -72,13 +72,13 @@ def emojis(content):
         [18,"8-)","sunglasses.png","Cool"],
         [19,":cool:","sunglasses.png","Cool"],
         [20,":lol:","satisfied.png","Laughing"],
-        [21,":x","icon_mad.gif","Mad"],
-        [22,":-x","icon_mad.gif","Mad"],
-        [23,":mad:","icon_mad.gif","Mad"],
+        [21,":x","rage.png","Mad"],
+        [22,":-x","rage.png","Mad"],
+        [23,":mad:","rage.png","Mad"],
         [24,":P","stuck_out_tongue.png","Razz"],
         [25,":-P","stuck_out_tongue.png","Razz"],
         [26,":razz:","stuck_out_tongue.png","Razz"],
-        [27,":oops:","icon_redface.gif","Embarassed"],
+        [27,":oops:","relaxed.png","Embarassed"],
         [28,":cry:","cry.png","Cry"],
         [29,":evil:","imp.png","Evil"],
         [30,":twisted:","imp.png","Twisted Evil"],
@@ -88,23 +88,23 @@ def emojis(content):
         [34,";-)","wink.png","Wink"],
         [35,":!:","exclamation.png","Exclamation"],
         [36,":?:","question.png","Question"],
-        [37,":idea:","icon_idea.gif","Idea"],
+        [37,":idea:","bulb.png","Idea"],
         [38,":arrow:","icon_arrow.gif","Arrow"],
-        [39,":|","icon_neutral.gif","Neutral"],
-        [40,":-|","icon_neutral.gif","Neutral"],
-        [41,":neutral:","icon_neutral.gif","Neutral"],
+        [39,":|","neutral_face.png","Neutral"],
+        [40,":-|","neutral_face.png","Neutral"],
+        [41,":neutral:","neutral_face.png","Neutral"],
         [42,":mrgreen:","grin.png","Mr. Green"],
         [43,":-#","no_mouth.png","Silenced"],
-        [44,":-s","eusa_eh.gif","Eh?"],
-        [45,":aiwebs_001:","aiwebs_001.gif","aiwebs_001"],
-        [46,":aiwebs_002:","aiwebs_002.gif","aiwebs_002"],
+        [44,":-s","fearful.png","Eh?"],
+        [45,":aiwebs_001:","grimacing.png","Grimacing"],
+        [46,":aiwebs_002:","expressionless.png","Expressionless"],
         [47,":aiwebs_003:","disappointed.png","Disappointed"],
         [48,":aiwebs_004:","blush.png","Blush"],
-        [49,":aiwebs_005:","aiwebs_005.gif","aiwebs_005"],
+        [49,":aiwebs_005:","confused.png","Confused"],
         [50,":aiwebs_006:","aiwebs_006.gif","aiwebs_006"],
-        [51,":aiwebs_007:","aiwebs_007.gif","aiwebs_007"],
+        [51,":aiwebs_007:","astonished.png","Astonished"],
         [52,":aiwebs_008:","aiwebs_008.gif","aiwebs_008"],
-        [53,":aiwebs_009:","aiwebs_009.gif","aiwebs_009"],
+        [53,":aiwebs_009:","astonished.png","Astonished"],
         [54,":aiwebs_010:","flushed.png","Flushed"],
         [55,":aiwebs_011:","grin.png","Grin"],
         [56,":aiwebs_012:","aiwebs_012.gif","aiwebs_012"],
@@ -120,7 +120,7 @@ def emojis(content):
         [66,":aiwebs_023:","aiwebs_023.gif","aiwebs_023"],
         [67,":aiwebs_024:","aiwebs_024.gif","aiwebs_024"],
         [68,":aiwebs_025:","aiwebs_025.gif","aiwebs_025"],
-        [69,":aiwebs_026:","aiwebs_026.gif","aiwebs_026"],
+        [69,":aiwebs_026:","relieved.png","Relieved"],
         [70,":aiwebs_027:","aiwebs_027.gif","aiwebs_027"],
         [71,":aiwebs_028:","laughing.png","Laughing"],
         [72,":aiwebs_029:","confounded.png","Confounded"],

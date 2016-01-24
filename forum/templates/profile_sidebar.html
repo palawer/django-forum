@@ -1,13 +1,7 @@
-<img src="{{ profile.profile.avatar_url }}" class="img-responsive" alt="{{ profile.username }}">
-
-<h2>{{ profile.username }}</h2>
-<h4 style="color:#777">Miembro desde el {{ profile.date_joined|date:"d M Y" }}</h4>
-
-<div class="sidebar-header">
-	Información
-</div>
-<div class="sidebar-body">
-	Mensajes: {{ profile.profile.posts }}<br/>
-	Location: {{ profile.profile.location }}<br/>
-	Website: {{ profile.profile.website }}<br/>
+{% load humanize %}
+<div style="margin-bottom:20px;">
+	<img src="{{ profile.profile.avatar_url }}" class="img-thumbnail pull-left" style="margin-right:15px;" alt="{{ profile.username }}">
+	<h2>{{ profile.username }}</h2>
+	<h4>Mensajes: {{ profile.profile.posts|intcomma }}</h4>
+	<div class="clearfix"></div>
 </div>

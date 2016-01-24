@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load extras %}
+{% load humanize %}
 {% block title %}{{ forum.name }}{% if topics.number > 1 %} - Página {{ topics.number }}{% endif %}{% endblock %}
 {% block content %}
 
@@ -25,7 +26,7 @@
 				{% if topics.has_previous %}
 					<li class="previous"><a href="?{% url_replace request 'page' topics.previous_page_number %}"><span aria-hidden="true">&larr;</span> anterior</a></li>
 				{% endif %}
-				<span class="current">Page {{ topics.number }} of {{ topics.paginator.num_pages }}.</span>
+				<span class="current">Página {{ topics.number }} de {{ topics.paginator.num_pages }}.</span>
 				{% if topics.has_next %}
 					<li class="next"><a href="?{% url_replace request 'page' topics.next_page_number %}">siguiente <span aria-hidden="true">&rarr;</span></a></li>
 				{% endif %}
@@ -42,17 +43,19 @@
 	<div class="sidebar">
 		<div class="sidebar-info">
 			<div class="sidebar-info-title">Información</div>
-			Temas: {{ forum.topics }}<br/>
-			Mensajes: {{ forum.posts }}
+			Temas: {{ forum.topics|intcomma }}<br/>
+			Mensajes: {{ forum.posts|intcomma }}
 		</div>
 		
-		<div class="sidebar-header">
-			Mejores temas
-		</div>
-		<div class="sidebar-body">
-			{% for topic in best_topics %}
-				{% include "topic_row_mini.html" %}
-			{% endfor %}
+		<div class="sidebar-panel">
+			<div class="sidebar-header">
+				Mejores temas
+			</div>
+			<div class="sidebar-body">
+				{% for topic in best_topics %}
+					{% include "topic_row_mini.html" %}
+				{% endfor %}
+			</div>
 		</div>
 	</div>
 	
