@@ -75,9 +75,10 @@ class Profile(models.Model):
     
     def avatar_url(self):
         if self.avatar:
-            file_path = "static/img/avatars/%s" % self.avatar
-            if os.path.exists(file_path):
-                return "/" + file_path
+            file_path = "/static/img/avatars/%s" % self.avatar
+            return file_path
+            #if os.path.exists(file_path):
+            #    return "/" + file_path
         
         # gravatar
         gravatar_url = "http://www.gravatar.com/avatar/" + hashlib.md5(self.user.email.lower()).hexdigest() + "?"
