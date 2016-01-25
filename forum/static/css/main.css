@@ -1,11 +1,7 @@
-body {
-
-}
-
+body {}
 h1, h2, h3 {margin-top: 0;}
 a,a:hover,a:active,a:focus {color:#07c}
 iframe {min-width:560px;min-height:315px;}
-
 
 .wrap {max-width:980px;margin-right:auto;margin-left:auto;/*padding-right:15px;padding-left:15px;*/}
 .wrap:before {content:" ";display:table;}
@@ -13,7 +9,7 @@ iframe {min-width:560px;min-height:315px;}
 
 .navbar {}
 .navbar-default {}
-.navbar-default .navbar-brand {font-size:150%;color:#222;text-transform:uppercase}
+.navbar-default .navbar-brand {font-size:150%;margin-left:-15px;color:#222;text-transform:uppercase}
 .navbar-default .navbar-nav>li>a {}
 .nav-tabs {margin-bottom:20px;}
 
@@ -81,9 +77,9 @@ blockquote {
 .ad {background:#EEE;border:1px solid #CCC;padding:10px 15px;margin-bottom:20px;}
 .ad p {margin:0}
 
-
-
-
-
-
-
+/* Responsive */
+@media (max-width: 1000px) {
+    .wrap {padding:0 10px;}
+    .main {float:none;width:auto}
+    .sidebar {float:none;width:auto;margin-left:0}
+}
