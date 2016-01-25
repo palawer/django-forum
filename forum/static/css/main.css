@@ -7,7 +7,7 @@ a,a:hover,a:active,a:focus {color:#07c}
 iframe {min-width:560px;min-height:315px;}
 
 
-.wrap {width:980px;margin-right:auto;margin-left:auto;/*padding-right:15px;padding-left:15px;*/}
+.wrap {max-width:980px;margin-right:auto;margin-left:auto;/*padding-right:15px;padding-left:15px;*/}
 .wrap:before {content:" ";display:table;}
 .wrap:after {content:" ";display:table;clear:both;}
 
