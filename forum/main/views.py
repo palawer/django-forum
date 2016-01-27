@@ -11,10 +11,13 @@ POSTS_PER_PAGE = 10
 def index(request):
     topics_list = Topic.objects.exclude(forum=6).exclude(forum=18).order_by('-last_post')
     forums = Forum.objects.exclude(id=6).exclude(id=18).order_by('category__order', 'order')
+    random_topic = Topic.objects.exclude(forum=6).exclude(forum=18).order_by('?').first()
     
     total_topics = sum([forum.topics for forum in forums])
     total_posts = sum([forum.posts for forum in forums])
     total_users = User.objects.all().count()
+    total_topics_res = Topic.objects.exclude(forum=6).exclude(forum=18).filter(replies__gt=0).count()
+    percent = round((float(total_topics_res)/float(total_topics))*100.0,2)
     
     paginator = Paginator(topics_list, TOPICS_PER_PAGE)
     page = request.GET.get('page')
@@ -31,6 +34,8 @@ def index(request):
         'total_topics': total_topics,
         'total_posts': total_posts,
         'total_users': total_users,
+        'total_topics_res': percent,
+        'random_topic': [random_topic],
     })
 
 def forum_view(request, slug):
@@ -40,6 +45,7 @@ def forum_view(request, slug):
     
     topics_list = Topic.objects.filter(forum=forum.id).order_by('-last_post')
     best_topics = Topic.objects.filter(forum=forum.id).order_by('-replies')[:10]
+    random_topic = Topic.objects.filter(forum=forum.id).order_by('?').first()
     
     paginator = Paginator(topics_list, TOPICS_PER_PAGE)
     page = request.GET.get('page')
@@ -54,6 +60,7 @@ def forum_view(request, slug):
         'forum': forum,
         'topics': topics,
         'best_topics': best_topics,
+        'random_topic': [random_topic],
     })
 
 def topic_view(request, slug):

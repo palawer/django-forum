@@ -16,6 +16,12 @@
 		</ol>
 		
 		<div class="topics">
+		{% for topic in random_topic %}
+			<div class="random">
+			{% include "topic_row.html" %}
+			</div>
+		{% endfor %}
+		
 		{% for topic in topics %}
 			{% include "topic_row.html" %}
 		{% endfor %}

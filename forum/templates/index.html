@@ -16,6 +16,12 @@
 		
 		<div class="topics">
 			<div class="topics-body">
+			{% for topic in random_topic %}
+				<div class="random">
+				{% include "topic_row.html" %}
+				</div>
+			{% endfor %}
+			
 			{% for topic in topics %}
 				{% include "topic_row.html" %}
 			{% endfor %}
@@ -56,8 +62,9 @@
 		<div class="sidebar-info">
 			<div class="sidebar-info-title">Información</div>
 			Temas: {{ total_topics|intcomma }}<br/>
+			Contestados: {{ total_topics_res }}%<br/>
 			Mensajes: {{ total_posts|intcomma }}<br/>
-			Usuarios: {{ total_users|intcomma }}
+			Usuarios: {{ total_users|intcomma }}<br/>
 		</div>
 	</div>
 	
