@@ -9,8 +9,9 @@ iframe {min-width:560px;min-height:315px;}
 
 .navbar {}
 .navbar-default {}
-.navbar-default .navbar-brand {font-size:150%;margin-left:-15px;color:#222;text-transform:uppercase}
+.navbar-default .navbar-brand {padding:12px 0;margin-right:10px;color:#222;text-transform:uppercase}
 .navbar-default .navbar-nav>li>a {}
+.navbar-toggle {margin-right:0;}
 .nav-tabs {margin-bottom:20px;}
 
 .footer {background:#f8f8f8;text-align:center;padding:15px 0;margin-top:20px;border-top:1px solid #e7e7e7;}
