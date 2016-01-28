@@ -47,10 +47,11 @@
 		
 		<div class="sidebar-info">
 			<div class="sidebar-info-title">Información</div>
-			Respuestas: {{ topic.replies|intcomma }}<br/>
-			Lecturas: {{ topic.views|intcomma }}<br/>
-			Página: {{ posts.number }} de {{ posts.paginator.num_pages }}<br/>
-			Último mensaje: <a href="{{ topic.url }}?page={{ posts.paginator.num_pages }}#post-{{ last_post.id }}">{{ last_post.user.username }}</a>
+			<img src="{{ topic.forum.image }}" width="48" height="48" class="pull-right" alt="{{ topic.forum.name }}">
+			<p>Respuestas: {{ topic.replies|intcomma }}</p>
+			<p>Lecturas: {{ topic.views|intcomma }}</p>
+			<p>Página: {{ posts.number }} de {{ posts.paginator.num_pages }}</p>
+			<p>Último mensaje: <a href="{{ topic.url }}?page={{ posts.paginator.num_pages }}#post-{{ last_post.id }}">{{ last_post.user.username }}</a></p>
 		</div>
 		
 		<div class="sidebar-panel">

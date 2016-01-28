@@ -7,16 +7,18 @@ from .models import *
 
 TOPICS_PER_PAGE = 20
 POSTS_PER_PAGE = 10
+USERS_PER_PAGE = 24
+EXCLUDED_FORUMS = [6, 18]
 
 def index(request):
-    topics_list = Topic.objects.exclude(forum=6).exclude(forum=18).order_by('-last_post')
-    forums = Forum.objects.exclude(id=6).exclude(id=18).order_by('category__order', 'order')
-    random_topic = Topic.objects.exclude(forum=6).exclude(forum=18).order_by('?').first()
+    topics_list = Topic.objects.exclude(forum__in=EXCLUDED_FORUMS).order_by('-last_post')
+    forums = Forum.objects.exclude(id__in=EXCLUDED_FORUMS).order_by('category__order', 'order')
+    random_topic = Topic.objects.exclude(forum__in=EXCLUDED_FORUMS).order_by('?').first()
     
     total_topics = sum([forum.topics for forum in forums])
     total_posts = sum([forum.posts for forum in forums])
     total_users = User.objects.all().count()
-    total_topics_res = Topic.objects.exclude(forum=6).exclude(forum=18).filter(replies__gt=0).count()
+    total_topics_res = Topic.objects.exclude(forum__in=EXCLUDED_FORUMS).filter(replies__gt=0).count()
     percent = round((float(total_topics_res)/float(total_topics))*100.0,2)
     
     paginator = Paginator(topics_list, TOPICS_PER_PAGE)
@@ -40,7 +42,7 @@ def index(request):
 
 def forum_view(request, slug):
     forum = get_object_or_404(Forum, slug=slug)
-    if forum.id in [6, 18]:
+    if forum.id in EXCLUDED_FORUMS:
         raise Http404
     
     topics_list = Topic.objects.filter(forum=forum.id).order_by('-last_post')
@@ -65,7 +67,7 @@ def forum_view(request, slug):
 
 def topic_view(request, slug):
     topic = get_object_or_404(Topic, slug=slug)
-    if topic.forum.id in [6, 18]:
+    if topic.forum.id in EXCLUDED_FORUMS:
         raise Http404
     
     posts_list = Post.objects.filter(topic=topic)
@@ -99,7 +101,7 @@ def topic_view(request, slug):
 
 def post_view(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
-    if post.forum.id in [6, 18]:
+    if post.forum.id in EXCLUDED_FORUMS:
         raise Http404
     
     num = Post.objects.filter(topic=post.topic).filter(id__lt=post.id).count()
@@ -117,7 +119,7 @@ def post_view(request, post_id):
 
 def profile_view(request, username):
     profile = get_object_or_404(User, username=username)
-    topics_list = Topic.objects.exclude(forum=6).exclude(forum=18).filter(user=profile.id).order_by('-id')
+    topics_list = Topic.objects.exclude(forum__in=EXCLUDED_FORUMS).filter(user=profile.id).order_by('-id')
     
     paginator = Paginator(topics_list, TOPICS_PER_PAGE)
     page = request.GET.get('page')
@@ -133,9 +135,27 @@ def profile_view(request, username):
         'topics': topics,
     })
 
+def profile_topics(request, username):
+    profile = get_object_or_404(User, username=username)
+    topics_list = Topic.objects.exclude(forum__in=EXCLUDED_FORUMS).filter(user=profile.id).order_by('-id')
+
+    paginator = Paginator(topics_list, TOPICS_PER_PAGE)
+    page = request.GET.get('page')
+    try:
+        topics = paginator.page(page)
+    except PageNotAnInteger:
+        topics = paginator.page(1)
+    except EmptyPage:
+        topics = paginator.page(paginator.num_pages)
+
+    return render(request, 'profile_topics.html', {
+        'profile': profile,
+        'topics': topics,
+    })
+
 def profile_posts(request, username):
     profile = get_object_or_404(User, username=username)
-    posts_list = Post.objects.exclude(forum=6).exclude(forum=18).filter(user=profile.id).order_by('-id')
+    posts_list = Post.objects.exclude(forum__in=EXCLUDED_FORUMS).filter(user=profile.id).order_by('-id')
     
     paginator = Paginator(posts_list, POSTS_PER_PAGE)
     page = request.GET.get('page')
@@ -152,9 +172,15 @@ def profile_posts(request, username):
     })
 
 def users_view(request):
-    users_list = User.objects.filter(id__gt=0)
+    query = request.GET.get('q', '')
+    if query:
+        users_list = User.objects.filter(username__contains=query).order_by('username')
+        users_count = User.objects.filter(username__contains=query).count()
+    else:
+        users_list = User.objects.all().order_by('-profile__posts')
+        users_count = User.objects.all().count()
 
-    paginator = Paginator(users_list, 36)
+    paginator = Paginator(users_list, USERS_PER_PAGE)
     page = request.GET.get('page')
     try:
         users = paginator.page(page)
@@ -164,10 +190,11 @@ def users_view(request):
         users = paginator.page(paginator.num_pages)
 
     return render(request, 'users.html', {
-        'users': users
+        'users': users,
+        'users_count': users_count,
+        'query': query,
     })
 
 def search_view(request):
     return render(request, 'search.html', {
-        
     })

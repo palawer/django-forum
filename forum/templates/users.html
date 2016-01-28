@@ -5,11 +5,23 @@
 {% block content %}
 
 <div class="wrap">
-	<h2 class="topic-title">Listado de usuarios</h2>
+	<h2 class="topic-title">
+		<div class="pull-right" style="width:200px;">
+		<form action="" method="get" autocomplete="off" role="search">
+			<div class="input-group">
+				<input type="text" name="q" value="{{ query }}" class="form-control" placeholder="Usuario...">
+				<div class="input-group-btn">
+					<input type="submit" class="btn btn-default" value="Buscar">
+				</div>
+			</div>
+		</form>
+		</div>
+		Usuarios ({{ users_count|intcomma }})
+	</h2>
 	
+	<div class="row">
 	{% for user in users %}
-		{% if forloop.first %}<div class="row">{% endif %}
-		<div class="col-sm-3" style="margin-bottom:25px;">
+		<div class="col-xs-6 col-md-4 col-lg-3" style="margin-bottom:25px;">
 			
 			<a href="{{ user.profile.url }}">
 				<img src="{{ user.profile.avatar_url }}" class="post-avatar pull-left" style="margin-right:10px;" alt="{{ user.username }}">
@@ -18,9 +30,23 @@
 			<span style="color:#999">{{ user.profile.posts|intcomma }} posts</span>
 			
 		</div>
-		{% if forloop.counter|divisibleby:4 %}</div><div class="row">{% endif %}
-		{% if forloop.last %}</div>{% endif %}
+		
+		{% if forloop.counter|divisibleby:2 %}
+		<!-- every 2nd col -->
+		<div class="visible-xs visible-sm clearfix divider"></div>
+		{% endif %}
+		
+		{% if forloop.counter|divisibleby:3 %}
+		<!-- every 3rd col -->
+		<div class="visible-md clearfix divider"></div>
+		{% endif %}
+		
+		{% if forloop.counter|divisibleby:4 %}
+		<!-- and every 4th col -->
+		<div class="visible-xs visible-sm visible-lg clearfix divider"></div>
+		{% endif %}
 	{% endfor %}
+	</div>
 	
 	<nav>
 		<ul class="pager">

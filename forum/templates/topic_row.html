@@ -1,5 +1,5 @@
 <div class="topic-row">
-	<img src="/static/img/icons/forum{{ topic.forum.id }}.png" width="32" height="32" class="pull-left" style="margin-right:15px;" alt="{{ topic.forum.name }}">
+	<img src="{{ topic.forum.image }}" width="32" height="32" class="pull-left" alt="{{ topic.forum.name }}">
 	<div class="topic-forum pull-right"><a href="{{ topic.forum.url }}">{{ topic.forum.name }}</a></div>
 	<h3><a href="{{ topic.url }}">{{ topic.title }}</a></h3>
 	<div class="topic-author">Por <a href="{{ topic.user.profile.url }}">{{ topic.user.username }}</a> el {{ topic.created|date:"d M Y" }} a las {{ topic.created|date:"H:i" }}</div>

@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load extras %}
 {% load humanize %}
-{% block title %}Home{% if topics.number > 1 %} - Página {{ topics.number }}{% endif %}{% endblock %}
+{% block title %}Foros{% if topics.number > 1 %} - Página {{ topics.number }}{% endif %}{% endblock %}
 {% block content %}
 
 <div class="wrap">
@@ -51,7 +51,7 @@
 					{% for forum in forums %}
 						<li><div class="pull-right" style="color:#999;">{{ forum.topics|intcomma }}</div>
 							<a href="{{ forum.url }}">
-							<img src="/static/img/icons/forum{{ forum.id }}.png" width="16" height="16" class="pull-left" style="margin-right:10px;" alt="{{ forum.name }}">
+							<img src="{{ forum.image }}" width="16" height="16" class="pull-left" style="margin-right:10px;" alt="{{ forum.name }}">
 							{{ forum.name }}
 						</a></li>
 					{% endfor %}
@@ -61,10 +61,10 @@
 		
 		<div class="sidebar-info">
 			<div class="sidebar-info-title">Información</div>
-			Temas: {{ total_topics|intcomma }}<br/>
-			Contestados: {{ total_topics_res }}%<br/>
-			Mensajes: {{ total_posts|intcomma }}<br/>
-			Usuarios: {{ total_users|intcomma }}<br/>
+			<p>Temas: {{ total_topics|intcomma }}</p>
+			<p>Contestados: {{ total_topics_res }}%</p>
+			<p>Mensajes: {{ total_posts|intcomma }}</p>
+			<p>Usuarios: {{ total_users|intcomma }}</p>
 		</div>
 	</div>
 	

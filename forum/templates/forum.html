@@ -49,8 +49,10 @@
 	<div class="sidebar">
 		<div class="sidebar-info">
 			<div class="sidebar-info-title">Información</div>
-			Temas: {{ forum.topics|intcomma }}<br/>
-			Mensajes: {{ forum.posts|intcomma }}
+			<img src="{{ forum.image }}" width="48" height="48" class="pull-right" alt="{{ forum.name }}">
+			<p>Temas: {{ forum.topics|intcomma }}</p>
+			<p>Mensajes: {{ forum.posts|intcomma }}</p>
+			<p>Página: {{ topics.number }} de {{ topics.paginator.num_pages }}</p>
 		</div>
 		
 		<div class="sidebar-panel">

@@ -20,6 +20,9 @@ class Forum(models.Model):
     
     def url(self):
         return "/forum/%s" % self.slug
+    
+    def image(self):
+        return "/static/img/icons/forum%s.png" % self.id
 
 class Topic(models.Model):
     user = models.ForeignKey(User)
