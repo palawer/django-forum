@@ -174,8 +174,8 @@ def profile_posts(request, username):
 def users_view(request):
     query = request.GET.get('q', '')
     if query:
-        users_list = User.objects.filter(username__contains=query).order_by('username')
-        users_count = User.objects.filter(username__contains=query).count()
+        users_list = User.objects.filter(username__icontains=query).order_by('username')
+        users_count = User.objects.filter(username__icontains=query).count()
     else:
         users_list = User.objects.all().order_by('-profile__posts')
         users_count = User.objects.all().count()
